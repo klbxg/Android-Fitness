@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/weiweili/Downloads/isFitness/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="/Users/weiweili/Downloads/isFitness/app/build/intermediates/pre-dexed/debug/classes-11db97917dcd34f07fbb69856b8faf4b4db28b12.jar" />
+    </item>
+    <item
+        jar="/Users/weiweili/Downloads/isFitness/sample-pulltorefresh/build/intermediates/exploded-aar/isFitness/pullToRefreshListFragment/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="2dfdf65f18030752a478d1a8134498f9b138b8a0">
+        <dex dex="/Users/weiweili/Downloads/isFitness/sample-pulltorefresh/build/intermediates/pre-dexed/debug/classes-e9fafbb943fba6cf943976b467cdd11aeb7ab14b.jar" />
+    </item>
+    <item
+        jar="/Users/weiweili/Downloads/isFitness/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/Users/weiweili/Downloads/isFitness/app/build/intermediates/pre-dexed/debug/classes-5688179cb290f7fdb83b17e9f145a1bfcbb60e1a.jar" />
+    </item>
+    <item
+        jar="/Users/weiweili/Downloads/isFitness/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="/Users/weiweili/Downloads/isFitness/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-3a669af55ee6f7149257100594c756c844d907b3.jar" />
+    </item>
+    <item
+        jar="/Users/weiweili/Downloads/isFitness/sample-pulltorefresh/build/intermediates/exploded-aar/isFitness/library/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="11e0e258c8e5ecfddb0cc48d48109fbbf5b950f3">
+        <dex dex="/Users/weiweili/Downloads/isFitness/sample-pulltorefresh/build/intermediates/pre-dexed/debug/classes-034482e65651daf9f9af18b86f3f96ab83d5fc6f.jar" />
+    </item>
+    <item
+        jar="/Users/weiweili/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/Users/weiweili/Downloads/isFitness/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-c62a3b794e3282154e7ee7cf4e3eb9574b48cddb.jar" />
+    </item>
+    <item
+        jar="/Users/weiweili/Downloads/isFitness/sample-pulltorefresh/build/intermediates/exploded-aar/isFitness/pullToRefreshViewPager/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="509916f6c20d1ac0c8c068bee34a25f07c5efc29">
+        <dex dex="/Users/weiweili/Downloads/isFitness/sample-pulltorefresh/build/intermediates/pre-dexed/debug/classes-89d661a75dfac76d7af86e058752c5297a52293c.jar" />
+    </item>
+    <item
+        jar="/Users/weiweili/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/18.0.0/support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="/Users/weiweili/Downloads/isFitness/sample-pulltorefresh/build/intermediates/pre-dexed/debug/support-v4-18.0.0-4fe5cb9555510981219b492f3e3123ead61eca05.jar" />
+    </item>
+
+</items>
