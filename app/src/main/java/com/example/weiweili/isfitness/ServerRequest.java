@@ -1,0 +1,203 @@
+package com.example.weiweili.isfitness;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+/**
+ * Created by mengyegong on 7/27/15.
+ */
+public class ServerRequest {
+    ProgressDialog progressDialog;
+    public static final int CONNECTION_TIME = 1000 * 15;
+    public static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
+
+    public ServerRequest(Context context) {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Processing");
+        progressDialog.setMessage("Please wait...");
+    }
+
+    public void storeUserDataInBackground(User user, GetUserCallBack callback) {
+        progressDialog.show();
+        new StoreUserDataAsyncTask(user, callback ).execute();
+    }
+
+    public void fetchUserDataInBackground(User user, GetUserCallBack callback) {
+        progressDialog.show();
+        new FetchUserDataAsyncTask(user, callback ).execute();
+    }
+
+    public boolean checkUserNameAsyncTask(String username) {
+        boolean result = false;
+        try {
+            result = new CheckUserNameAsyncTask(username).execute().get();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public class StoreUserDataAsyncTask extends AsyncTask<Void, Void, Void> {
+        User user;
+        GetUserCallBack userCallback;
+
+        public  StoreUserDataAsyncTask(User user, GetUserCallBack userCallback) {
+            this.user = user;
+            this.userCallback = userCallback;
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("name", user.name));
+            dataToSend.add(new BasicNameValuePair("age", user.age + ""));
+            dataToSend.add(new BasicNameValuePair("email", user.email));
+            dataToSend.add(new BasicNameValuePair("username", user.username));
+            dataToSend.add(new BasicNameValuePair("password", user.password));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "Register.php");
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                client.execute(post);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            userCallback.done(null);
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    public class CheckUserNameAsyncTask extends  AsyncTask<Void, Void, Boolean> {
+        String username;
+        CheckUserCallBack userCallBack;
+
+        public CheckUserNameAsyncTask(String username) {
+            this.username = username;
+        }
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("username", username));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "CheckUsername.php");
+
+            Boolean existed = false;
+
+            try{
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                HttpResponse httpResponse = client.execute(post);
+                HttpEntity entity = httpResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                JSONObject jObject = new JSONObject(result);
+
+                if(jObject.length() == 0) {
+                    existed = false;
+                }
+                else {
+                    existed = true;
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return existed;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean existed) {
+            super.onPostExecute(existed);
+        }
+    }
+
+    public class FetchUserDataAsyncTask extends AsyncTask<Void, Void, User> {
+        User user;
+        GetUserCallBack userCallback;
+
+        public FetchUserDataAsyncTask(User user, GetUserCallBack userCallback) {
+            this.user = user;
+            this.userCallback = userCallback;
+        }
+
+        @Override
+        protected User doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("username", user.username));
+            dataToSend.add(new BasicNameValuePair("password", user.password));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchUserInfo.php");
+
+            User returnedUser = null;
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                HttpResponse httpResponse = client.execute(post);
+                HttpEntity entity = httpResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                JSONObject jObject = new JSONObject(result);
+
+                if(jObject.length() == 0) {
+                    returnedUser = null;
+                }
+                else {
+                    String name = jObject.getString("name");
+                    int age = jObject.getInt("age");
+                    String email = jObject.getString("email");
+                    String username = jObject.getString("username");
+                    returnedUser = new User(name, age, username, email, user.password);
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return returnedUser;
+        }
+
+        @Override
+        protected void onPostExecute(User returnedUser) {
+            progressDialog.dismiss();
+            userCallback.done(returnedUser);
+            super.onPostExecute(returnedUser);
+        }
+    }
+}

@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class Register extends ActionBarActivity implements View.OnClickListener{
 
-    DatabaseHelper helper = new DatabaseHelper(this);
+    //DatabaseHelper helper = new DatabaseHelper(this);
     Button bRegister;
     EditText etName, etAge, etUsername, etPassword1, etPassword2, etEmail;
     @Override
@@ -42,21 +42,45 @@ public class Register extends ActionBarActivity implements View.OnClickListener{
                 String email = etEmail.getText().toString();
                 String password1 = etPassword1.getText().toString();
                 String password2 = etPassword2.getText().toString();
-                int age = Integer.parseInt(etAge.getText().toString());
+                int age = 0;
+                try {
+                    age = Integer.parseInt(etAge.getText().toString());
+                }
+                catch(NumberFormatException e) {
+                    Toast pass = Toast.makeText(Register.this, "Age format wrong!", Toast.LENGTH_SHORT);
+                    pass.show();
+                    break;
+                }
 
                 if(!password1.equals(password2)) {
                     Toast pass = Toast.makeText(Register.this, "Passwords don't match!", Toast.LENGTH_SHORT);
                     pass.show();
-                } else {
-                    User registeredData = new User(name, age, username, email, password1);
-                    helper.insertUser(registeredData);
-                    Intent intent = new Intent(this, Login.class);
-                    startActivity(intent);
                 }
-
+                else {
+                    if(checkUser(username)) {
+                        Toast existed = Toast.makeText(Register.this, "Username existed!", Toast.LENGTH_SHORT);
+                        existed.show();
+                    }
+                    else {
+                        registerUser(new User(name, age, username, email, password1));
+                    }
+                }
                 break;
         }
     }
 
+    private boolean checkUser(String username) {
+        ServerRequest serverRequest = new ServerRequest(this);
+        return serverRequest.checkUserNameAsyncTask(username);
+    }
+    private void registerUser(User user) {
+        ServerRequest serverRequest = new ServerRequest(this);
+        serverRequest.storeUserDataInBackground(user, new GetUserCallBack() {
+            @Override
+            public void done(User returnedUser) {
+                startActivity(new Intent(Register.this, Login.class));
+            }
+        });
+    }
 
 }

@@ -1510,6 +1510,8 @@ containing a value of this type.
         public static final int abc_textfield_search_material=0x7f02003a;
     }
     public static final class id {
+        public static final int DownloadImage=0x7f0c005a;
+        public static final int Imageprev=0x7f0c004f;
         public static final int action_bar=0x7f0c0040;
         public static final int action_bar_activity_content=0x7f0c0000;
         public static final int action_bar_container=0x7f0c003f;
@@ -1523,18 +1525,21 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0c003d;
         public static final int action_mode_bar_stub=0x7f0c003c;
         public static final int action_mode_close_button=0x7f0c0025;
-        public static final int action_settings=0x7f0c005a;
+        public static final int action_settings=0x7f0c0062;
         public static final int activity_chooser_view_content=0x7f0c0026;
         public static final int alertTitle=0x7f0c0030;
         public static final int always=0x7f0c0016;
-        public static final int bLogin=0x7f0c0051;
-        public static final int bLogout=0x7f0c0055;
-        public static final int bRegister=0x7f0c0059;
+        public static final int bDownloadImage=0x7f0c005c;
+        public static final int bLogin=0x7f0c0053;
+        public static final int bLogout=0x7f0c005d;
+        public static final int bRegister=0x7f0c0061;
+        public static final int bUploadImage=0x7f0c0059;
         public static final int beginning=0x7f0c0013;
         public static final int buttonPanel=0x7f0c0036;
         public static final int checkbox=0x7f0c0038;
         public static final int collapseActionView=0x7f0c0017;
         public static final int contentPanel=0x7f0c0031;
+        public static final int cpic=0x7f0c0050;
         public static final int custom=0x7f0c0035;
         public static final int customPanel=0x7f0c0034;
         public static final int decor_content_parent=0x7f0c003e;
@@ -1544,13 +1549,15 @@ containing a value of this type.
         public static final int dropdown=0x7f0c001c;
         public static final int edit_query=0x7f0c0042;
         public static final int end=0x7f0c0014;
-        public static final int etAge=0x7f0c0056;
-        public static final int etEmail=0x7f0c0054;
-        public static final int etName=0x7f0c0053;
-        public static final int etPassword=0x7f0c0050;
-        public static final int etPassword1=0x7f0c0057;
-        public static final int etPassword2=0x7f0c0058;
-        public static final int etUsername=0x7f0c004f;
+        public static final int etAge=0x7f0c005e;
+        public static final int etDownloadName=0x7f0c005b;
+        public static final int etEmail=0x7f0c0056;
+        public static final int etName=0x7f0c0055;
+        public static final int etPassword=0x7f0c0052;
+        public static final int etPassword1=0x7f0c005f;
+        public static final int etPassword2=0x7f0c0060;
+        public static final int etUploadName=0x7f0c0058;
+        public static final int etUsername=0x7f0c0051;
         public static final int expand_activities_button=0x7f0c0027;
         public static final int expanded_menu=0x7f0c0037;
         public static final int home=0x7f0c0004;
@@ -1558,6 +1565,7 @@ containing a value of this type.
         public static final int icon=0x7f0c002b;
         public static final int ifRoom=0x7f0c0018;
         public static final int image=0x7f0c0028;
+        public static final int imageToUpload=0x7f0c0057;
         public static final int listMode=0x7f0c0009;
         public static final int list_item=0x7f0c002a;
         public static final int middle=0x7f0c0015;
@@ -1596,7 +1604,7 @@ containing a value of this type.
         public static final int title=0x7f0c002c;
         public static final int title_template=0x7f0c002f;
         public static final int topPanel=0x7f0c002e;
-        public static final int tvRegisterLink=0x7f0c0052;
+        public static final int tvRegisterLink=0x7f0c0054;
         public static final int up=0x7f0c0008;
         public static final int useLogo=0x7f0c0012;
         public static final int withText=0x7f0c001a;
