@@ -2,37 +2,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="200dp"
+    android:background="@drawable/bg_login"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
         android:text="Username"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#ff434343"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_marginBottom="10dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#ff5c5c5c"
+        android:alpha="0.5" />
 
     <TextView
         android:layout_width="wrap_content"
         android:text="Password"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#ff434343"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_marginBottom="10dp"
         android:inputType="textPassword"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        android:background="#ff5c5c5c" />
 
     <Button
         android:id="@+id/bLogin"
         android:text="Login"
         android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.7" />
 
     <TextView
         android:id="@+id/tvRegisterLink"
@@ -40,7 +57,9 @@
         android:text="Register Here"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#ff434343"
+        android:textSize="15dp" />
 
 </LinearLayout>
-<!-- From: file:/Users/mengyegong/Documents/project/Android/Android-Fitness/app/src/main/res/layout/activity_login.xml -->
+<!-- From: file:/Users/weiweili/Documents/android%20mobile/Android-Fitness/app/src/main/res/layout/activity_login.xml -->
