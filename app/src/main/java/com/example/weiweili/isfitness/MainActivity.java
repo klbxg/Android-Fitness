@@ -1,23 +1,42 @@
 package com.example.weiweili.isfitness;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     private static final int RESULT_LOAD_IMAGE = 1;
+    private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
 
     Button bLogout, bUploadImage, bDownloadImage;
-    EditText etName, etEmail, etUsername, etUploadName, etDownloadName;
+    EditText etName, etEmail, etUsername, etUploadImageName, etDownloadImageName;
     ImageView imageToUpload, DownloadImage;
 
     UserLocalStore userLocalStore;
@@ -32,8 +51,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         etEmail = (EditText) findViewById(R.id.etEmail);
         etUsername = (EditText) findViewById(R.id.etUsername);
 
-        etUploadName = (EditText) findViewById(R.id.etUploadName);
-        etDownloadName = (EditText) findViewById(R.id.etDownloadName);
+        etUploadImageName = (EditText) findViewById(R.id.etUploadName);
+        etDownloadImageName = (EditText) findViewById(R.id.etDownloadName);
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         DownloadImage = (ImageView) findViewById(R.id.DownloadImage);
@@ -78,6 +97,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, RESULT_LOAD_IMAGE);
                 break;
+            case R.id.bUploadImage:
+                User user = userLocalStore.getLoggedInUser();
+                Bitmap image = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
+                new UploadImage(image, etUploadImageName.getText().toString(), user.username).execute();
+                break;
+
+            case R.id.bDownloadImage:
+
+                break;
 
             case R.id.bLogout:
                 userLocalStore.clearUserData();
@@ -87,7 +115,50 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 break;
         }
     }
+    private class UploadImage extends AsyncTask<Void, Void, Void> {
+        Bitmap image;
+        String name;
+        String username;
+        public UploadImage(Bitmap image, String name, String username) {
+            this.image = image;
+            this.name = name;
+            this.username = username;
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("image", encodedImage));
+            dataToSend.add(new BasicNameValuePair("name", name));
+            dataToSend.add(new BasicNameValuePair("username", username));
 
+            HttpParams httpRequestParams = getHttpRequestParams();
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "SavePictures.php");
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                client.execute(post);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private HttpParams getHttpRequestParams() {
+        HttpParams httpRequestParams = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(httpRequestParams, 1000 * 30);
+        HttpConnectionParams.setSoTimeout(httpRequestParams, 1000 * 30);
+        return httpRequestParams;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
