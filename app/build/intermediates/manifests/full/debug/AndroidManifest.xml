@@ -43,6 +43,10 @@
             android:name="com.example.weiweili.isfitness.GroupSharing"
             android:label="@string/title_activity_group_sharing" >
         </activity>
+        <activity
+            android:name="com.example.weiweili.isfitness.MyPage"
+            android:label="@string/title_activity_my_page" >
+        </activity>
     </application>
 
 </manifest>

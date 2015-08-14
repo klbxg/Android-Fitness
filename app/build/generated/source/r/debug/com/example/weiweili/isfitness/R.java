@@ -1645,17 +1645,19 @@ containing a value of this type.
         public static final int activity_group_sharing=0x7f040019;
         public static final int activity_login=0x7f04001a;
         public static final int activity_main=0x7f04001b;
-        public static final int activity_register=0x7f04001c;
-        public static final int select_dialog_item_material=0x7f04001d;
-        public static final int select_dialog_multichoice_material=0x7f04001e;
-        public static final int select_dialog_singlechoice_material=0x7f04001f;
-        public static final int support_simple_spinner_dropdown_item=0x7f040020;
+        public static final int activity_my_page=0x7f04001c;
+        public static final int activity_register=0x7f04001d;
+        public static final int select_dialog_item_material=0x7f04001e;
+        public static final int select_dialog_multichoice_material=0x7f04001f;
+        public static final int select_dialog_singlechoice_material=0x7f040020;
+        public static final int support_simple_spinner_dropdown_item=0x7f040021;
     }
     public static final class menu {
         public static final int menu_group_sharing=0x7f0d0000;
         public static final int menu_login=0x7f0d0001;
         public static final int menu_main=0x7f0d0002;
-        public static final int menu_register=0x7f0d0003;
+        public static final int menu_my_page=0x7f0d0003;
+        public static final int menu_register=0x7f0d0004;
     }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;
@@ -1683,7 +1685,8 @@ containing a value of this type.
         public static final int hello_world=0x7f060013;
         public static final int title_activity_group_sharing=0x7f060014;
         public static final int title_activity_login=0x7f060015;
-        public static final int title_activity_register=0x7f060016;
+        public static final int title_activity_my_page=0x7f060016;
+        public static final int title_activity_register=0x7f060017;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f08006b;

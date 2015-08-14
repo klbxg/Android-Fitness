@@ -31,6 +31,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
+
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";

@@ -197,6 +197,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_group_sharing">GroupSharing</string>
     <string name="title_activity_login">Login</string>
+    <string name="title_activity_my_page">MyPage</string>
     <string name="title_activity_register">Register</string>
     <!-- From: file:/Users/weiweili/Documents/android%20mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
     <eat-comment/>

@@ -87,7 +87,5 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-v4-18.0.0" level="project" />
     <orderEntry type="module" module-name="library" exported="" />
-    <orderEntry type="module" module-name="pullToRefreshViewPager" exported="" />
-    <orderEntry type="module" module-name="pullToRefreshListFragment" exported="" />
   </component>
 </module>
