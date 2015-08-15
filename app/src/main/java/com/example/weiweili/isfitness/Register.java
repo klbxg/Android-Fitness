@@ -73,6 +73,7 @@ public class Register extends ActionBarActivity implements View.OnClickListener{
         ServerRequest serverRequest = new ServerRequest(this);
         return serverRequest.checkUserNameAsyncTask(username);
     }
+
     private void registerUser(User user) {
         ServerRequest serverRequest = new ServerRequest(this);
         serverRequest.storeUserDataInBackground(user, new GetUserCallBack() {

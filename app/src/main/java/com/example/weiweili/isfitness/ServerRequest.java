@@ -46,6 +46,18 @@ public class ServerRequest {
         progressDialog.show();
         new FetchUserDataAsyncTask(user, callback ).execute();
     }
+    // Search friends in background
+    public JSONObject fetchSearchUserInBackground(String username) {
+        progressDialog.show();
+        JSONObject jObject = new JSONObject();
+        try {
+            jObject = new FetchSearchUserAsyncTask(username).execute().get();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jObject;
+    }
 
     public boolean checkUserNameAsyncTask(String username) {
         boolean result = false;
@@ -96,6 +108,42 @@ public class ServerRequest {
             progressDialog.dismiss();
             userCallback.done(null);
             super.onPostExecute(aVoid);
+        }
+    }
+
+    public class FetchSearchUserAsyncTask extends AsyncTask<Void, Void, JSONObject> {
+        String username;
+        SearchUserCallBack userCallBack;
+
+        public FetchSearchUserAsyncTask(String username) { this.username = username; }
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("username", username));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "SearchUser.php");
+            JSONObject jObject = new JSONObject();
+            try{
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                HttpResponse httpResponse = client.execute(post);
+                HttpEntity entity = httpResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                jObject = new JSONObject(result);
+                Log.d("search", jObject.getJSONArray("username").getString(0));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return jObject;
+        }
+        @Override
+        protected void onPostExecute(JSONObject jObject) {
+            progressDialog.dismiss();
+            super.onPostExecute(jObject);
         }
     }
 
