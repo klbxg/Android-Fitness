@@ -36,7 +36,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
 
-    Button bLogout, bUploadImage, bDownloadImage;
+    Button bLogout, bUploadImage, bDownloadImage, bSearchUser;
     EditText etName, etEmail, etUsername, etUploadImageName, etDownloadImageName;
     ImageView imageToUpload, DownloadImage;
 
@@ -62,10 +62,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         bDownloadImage = (Button) findViewById(R.id.bDownloadImage);
 
         bLogout = (Button) findViewById(R.id.bLogout);
+
+        bSearchUser = (Button) findViewById(R.id.bSearchUser);
+
         bLogout.setOnClickListener(this);
         imageToUpload.setOnClickListener(this);
         bUploadImage.setOnClickListener(this);
         bDownloadImage.setOnClickListener(this);
+        bSearchUser.setOnClickListener(this);
 
         userLocalStore = new UserLocalStore(this);
     }
@@ -94,10 +98,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.bSearchUser:
+                Intent intent1 = new Intent(MainActivity.this, SearchUser.class);
+                startActivity(intent1);
+                break;
+
             case R.id.imageToUpload:
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, RESULT_LOAD_IMAGE);
                 break;
+
             case R.id.bUploadImage:
                 User user = userLocalStore.getLoggedInUser();
                 Bitmap image = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
