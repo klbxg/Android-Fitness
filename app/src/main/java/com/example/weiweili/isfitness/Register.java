@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 public class Register extends ActionBarActivity implements View.OnClickListener{
 
-    //DatabaseHelper helper = new DatabaseHelper(this);
     Button bRegister;
     EditText etName, etAge, etUsername, etPassword1, etPassword2, etEmail;
     @Override
@@ -62,7 +61,7 @@ public class Register extends ActionBarActivity implements View.OnClickListener{
                         existed.show();
                     }
                     else {
-                        registerUser(new User(name, age, username, email, password1));
+                        registerUser(new User(name, age, username, email, password1, null));
                     }
                 }
                 break;

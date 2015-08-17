@@ -2,6 +2,7 @@ package com.example.weiweili.isfitness;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 
 /**
  * Created by weiweili on 7/16/15.
@@ -21,6 +22,7 @@ public class UserLocalStore {
         spEditor.putString("email", user.email);
         spEditor.putString("username", user.username);
         spEditor.putString("password", user.password);
+        spEditor.putString("photo", user.photo);
         spEditor.commit();
     }
 
@@ -30,8 +32,9 @@ public class UserLocalStore {
         String username = userLocalDatabase.getString("username", "");
         String email = userLocalDatabase.getString("email", "");
         String password = userLocalDatabase.getString("password", "");
+        //Bitmap photo = userLocalDatabase.
 
-        User storedUser = new User(name, age, username, email, password);
+        User storedUser = new User(name, age, username, email, password, null);
         return  storedUser;
     }
 

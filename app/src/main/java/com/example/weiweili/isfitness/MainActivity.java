@@ -36,9 +36,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
 
-    Button bLogout, bUploadImage, bDownloadImage, bSearchUser;
-    EditText etName, etEmail, etUsername, etUploadImageName, etDownloadImageName;
-    ImageView imageToUpload, DownloadImage;
+    Button bLogout, bSearchUser, bShareContent;
+    EditText etName, etEmail, etUsername;
+    ImageView ivPhoto;
+
 
     UserLocalStore userLocalStore;
 
@@ -52,24 +53,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         etEmail = (EditText) findViewById(R.id.etEmail);
         etUsername = (EditText) findViewById(R.id.etUsername);
 
-        etUploadImageName = (EditText) findViewById(R.id.etUploadName);
-        etDownloadImageName = (EditText) findViewById(R.id.etDownloadName);
-
-        imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
-        DownloadImage = (ImageView) findViewById(R.id.DownloadImage);
-
-        bUploadImage = (Button) findViewById(R.id.bUploadImage);
-        bDownloadImage = (Button) findViewById(R.id.bDownloadImage);
 
         bLogout = (Button) findViewById(R.id.bLogout);
-
+        bShareContent = (Button) findViewById(R.id.bShareContent);
         bSearchUser = (Button) findViewById(R.id.bSearchUser);
+        ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
 
         bLogout.setOnClickListener(this);
-        imageToUpload.setOnClickListener(this);
-        bUploadImage.setOnClickListener(this);
-        bDownloadImage.setOnClickListener(this);
+        bShareContent.setOnClickListener(this);
         bSearchUser.setOnClickListener(this);
+        ivPhoto.setOnClickListener(this);
 
         userLocalStore = new UserLocalStore(this);
     }
@@ -88,34 +81,24 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private void displayUserDetails() {
         User user = userLocalStore.getLoggedInUser();
-//        String uname = getIntent().getStringExtra("Username");
-//        String name = getIntent().getStringExtra("Name");
-//        String email = getIntent().getStringExtra("Email");
         etUsername.setText(user.username);
         etEmail.setText(user.email);
         etName.setText(user.name);
+
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ivPhoto:
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+
+                break;
+
             case R.id.bSearchUser:
                 Intent intent1 = new Intent(MainActivity.this, SearchUser.class);
                 startActivity(intent1);
-                break;
-
-            case R.id.imageToUpload:
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, RESULT_LOAD_IMAGE);
-                break;
-
-            case R.id.bUploadImage:
-                User user = userLocalStore.getLoggedInUser();
-                Bitmap image = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
-                new UploadImage(image, etUploadImageName.getText().toString(), user.username).execute();
-                break;
-
-            case R.id.bDownloadImage:
-
                 break;
 
             case R.id.bLogout:
@@ -124,30 +107,32 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
                 startActivity(new Intent(this, Login.class));
                 break;
+
+            case R.id.bShareContent:
+                Intent intent2 = new Intent(MainActivity.this, ShareContent.class);
+                startActivity(intent2);
+                break;
         }
     }
-    private class UploadImage extends AsyncTask<Void, Void, Void> {
+    private class Uploadphoto extends AsyncTask<Void, Void, Void> {
         Bitmap image;
-        String name;
         String username;
-        public UploadImage(Bitmap image, String name, String username) {
+        public Uploadphoto(Bitmap image, String username) {
             this.image = image;
-            this.name = name;
             this.username = username;
         }
         @Override
         protected Void doInBackground(Void... params) {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-            String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+            String encodedPhoto = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
-            dataToSend.add(new BasicNameValuePair("image", encodedImage));
-            dataToSend.add(new BasicNameValuePair("name", name));
+            dataToSend.add(new BasicNameValuePair("photo", encodedPhoto));
             dataToSend.add(new BasicNameValuePair("username", username));
 
             HttpParams httpRequestParams = getHttpRequestParams();
             HttpClient client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS + "SavePictures.php");
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "SavePhoto.php");
 
             try {
                 post.setEntity(new UrlEncodedFormEntity(dataToSend));
@@ -161,7 +146,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Photo Uploaded", Toast.LENGTH_SHORT).show();
         }
     }
     private HttpParams getHttpRequestParams() {
@@ -175,9 +160,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
-            imageToUpload.setImageURI(selectedImage);
+            ivPhoto.setImageURI(selectedImage);
+            User user = userLocalStore.getLoggedInUser();
+            //String username = etUsername.getText().toString();
+            Bitmap image = ((BitmapDrawable) ivPhoto.getDrawable()).getBitmap();
+            new Uploadphoto(image, user.username).execute();
+
         }
     }
+
+
+
 
     //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {

@@ -19,7 +19,6 @@ public class Login extends ActionBarActivity implements View.OnClickListener{
     EditText etUsername, etPassword;
     TextView tvRegisterLink;
     UserLocalStore userLocalStore;
-    //DatabaseHelper helper = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
