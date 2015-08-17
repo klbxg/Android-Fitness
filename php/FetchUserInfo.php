@@ -9,7 +9,7 @@
 	mysqli_stmt_execute($statement);
 
 	mysqli_stmt_store_result($statement);
-	mysqli_stmt_bind_result($statement, $id, $name, $age, $email, $username, $password);
+	mysqli_stmt_bind_result($statement, $id, $name, $age, $email, $username, $password, $photo);
 
 	$user = array();
 	while(mysqli_stmt_fetch($statement)) {
