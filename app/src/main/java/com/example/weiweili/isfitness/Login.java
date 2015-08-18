@@ -47,20 +47,6 @@ public class Login extends ActionBarActivity implements View.OnClickListener{
 
                 authenticate(user);
 
-//                String pass = helper.searchPass(username);
-//
-//                if(pass.equals(password)) {
-//                    Intent intent = new Intent(Login.this, MainActivity.class);
-//                    intent.putExtra("Username", username);
-//                    User user1 = helper.searchInfo(username);
-//                    intent.putExtra("Email", user1.email);
-//                    intent.putExtra("Name", user1.name);
-//                    startActivity(intent);
-//                } else {
-//                    Toast temp = Toast.makeText(Login.this, "Passwords don't match!", Toast.LENGTH_SHORT);
-//                    temp.show();
-//                }
-
                 break;
             case  R.id.tvRegisterLink:
 

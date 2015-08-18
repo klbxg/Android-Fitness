@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -56,7 +57,10 @@ public class SearchUser extends ActionBarActivity {
 
     //Do the search
     private void doMySearch(String query) {
+
         ServerRequest serverRequest = new ServerRequest(this);
+        UserLocalStore userLocalStore = new UserLocalStore(this);
+        String useNow = userLocalStore.getLoggedInUser().username;
         JSONObject result = serverRequest.fetchSearchUserInBackground(query);
         try{
             ArrayList<UserSearched> users = new ArrayList<>();
@@ -64,7 +68,10 @@ public class SearchUser extends ActionBarActivity {
             Log.d("search", length + "");
 
             for (int i = 0; i < length; i++) {
-                users.add(new UserSearched(result.getJSONArray("username").getString(i)));
+                String tmp = result.getJSONArray("username").getString(i);
+                if (tmp.compareTo(useNow) != 0) {
+                    users.add(new UserSearched(tmp));
+                }
             }
 
             lvSearchFriendResult.setAdapter(new SearchUserAdapter(this, users));
@@ -149,6 +156,8 @@ class SearchUserAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         UserSearched userSearched = userList.get(position);
+        ServerRequest serverRequest = new ServerRequest(context);
+        UserLocalStore userLocalStore = new UserLocalStore(context);
 
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.search_list_element, null);
@@ -165,6 +174,21 @@ class SearchUserAdapter extends BaseAdapter {
         holder.user_name.setText(userSearched.username);
         new DownloadImage(userSearched.username, holder.user_image).execute();
         holder.addFriend.setOnClickListener(new FollowClickListener(userSearched, context));
+        //holder.deleteFriend.setVisibility(View.GONE);
+        //holder.user_image.setImageBitmap();
+        Log.d("ttt","ttt");
+        boolean followed = serverRequest.checkFollowedInBackground(userLocalStore.getLoggedInUser().username, userSearched.username);
+        if (!followed) {
+            Log.d("Followed", "False");
+            holder.addFriend.setImageResource(R.drawable.add_friend);
+            holder.addFriend.setOnClickListener(new FollowClickListener(userSearched, context, holder));
+            //holder.deleteFriend.setVisibility(View.GONE);
+        }
+        else {
+            Log.d("Followed", "True");
+            //holder.deleteFriend.setVisibility(View.VISIBLE);
+            holder.addFriend.setImageResource(R.drawable.delete_friend);
+        }
 
         return convertView;
     }
@@ -204,21 +228,40 @@ class SearchUserAdapter extends BaseAdapter {
         }
     }
 
+class ViewHolder {
+    //ImageView user_image;
+    TextView user_name;
+    ImageButton addFriend;
+    //ImageButton deleteFriend;
 }
 
 // this is the follow button click listener
 class FollowClickListener implements OnClickListener {
     UserSearched userSearched;
     Context context;
+    UserLocalStore userLocalStore;
+    ViewHolder holder;
 
-    public FollowClickListener(UserSearched userSearched, Context context) {
+    public FollowClickListener(UserSearched userSearched, Context context, ViewHolder holder) {
         this.userSearched = userSearched;
         this.context = context;
+        userLocalStore = new UserLocalStore(context);
+        this.holder = holder;
     }
 
     @Override
     public void onClick(View v) {
-
+        // update the database to follow
+        ServerRequest serverRequest = new ServerRequest(context);
+        serverRequest.addFollowInBackground(userLocalStore.getLoggedInUser().username, userSearched.username, new AddFollowCallBack() {
+            @Override
+            public void done() {
+                holder.addFriend.setImageResource(R.drawable.delete_friend);
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, "Follow " + userSearched.username + "Success", duration);
+                toast.show();
+            }
+        });
     }
 
 }

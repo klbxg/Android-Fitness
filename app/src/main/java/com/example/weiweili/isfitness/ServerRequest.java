@@ -46,7 +46,7 @@ public class ServerRequest {
         progressDialog.show();
         new FetchUserDataAsyncTask(user, callback ).execute();
     }
-    // Search friends in background
+    // Search users in background
     public JSONObject fetchSearchUserInBackground(String username) {
         progressDialog.show();
         JSONObject jObject = new JSONObject();
@@ -57,6 +57,24 @@ public class ServerRequest {
             e.printStackTrace();
         }
         return jObject;
+    }
+
+    // Add follow in background
+    public void addFollowInBackground(String username, String wantfollow, AddFollowCallBack callback) {
+        progressDialog.show();
+        new AddFollowAsyncTask(username, wantfollow, callback).execute();
+    }
+
+    // Check whether followed in background
+    public boolean checkFollowedInBackground(String username, String otherUserName) {
+        boolean result = false;
+        try {
+            result = new CheckFollowedAsyncTask(username, otherUserName).execute().get();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public boolean checkUserNameAsyncTask(String username) {
@@ -70,6 +88,98 @@ public class ServerRequest {
         return result;
     }
 
+    public class CheckFollowedAsyncTask extends AsyncTask<Void, Void, Boolean> {
+        String username;
+        String otherUsername;
+
+        public CheckFollowedAsyncTask(String username, String otherUsername) {
+            this.username = username;
+            this.otherUsername = otherUsername;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("username", username));
+            dataToSend.add(new BasicNameValuePair("otherUsername", otherUsername));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "CheckFollowed.php");
+
+            Boolean existed = false;
+
+            try{
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                HttpResponse httpResponse = client.execute(post);
+                HttpEntity entity = httpResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                Log.d("followed", result);
+                JSONObject jObject = new JSONObject(result);
+
+                if(jObject.length() == 0) {
+                    existed = false;
+                }
+                else {
+                    existed = true;
+                }
+            }
+            catch (Exception e) {
+                //e.printStackTrace();
+                existed = false;
+            }
+
+            return existed;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean existed) {
+            super.onPostExecute(existed);
+        }
+    }
+
+    public class AddFollowAsyncTask extends AsyncTask<Void, Void, Void> {
+        String username;
+        String wantfollow;
+        AddFollowCallBack callback;
+
+        public AddFollowAsyncTask(String username, String wantfollow, AddFollowCallBack callback) {
+            this.username = username;
+            this.wantfollow = wantfollow;
+            this.callback = callback;
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("username", username));
+            dataToSend.add(new BasicNameValuePair("wantfollow", wantfollow));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "AddFollow.php");
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                client.execute(post);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            callback.done();
+            super.onPostExecute(aVoid);
+        }
+    }
     public class StoreUserDataAsyncTask extends AsyncTask<Void, Void, Void> {
         User user;
         GetUserCallBack userCallback;
@@ -172,6 +282,7 @@ public class ServerRequest {
                 HttpResponse httpResponse = client.execute(post);
                 HttpEntity entity = httpResponse.getEntity();
                 String result = EntityUtils.toString(entity);
+                Log.d("checkusername", result.length() + "");
                 JSONObject jObject = new JSONObject(result);
 
                 if(jObject.length() == 0) {
@@ -183,6 +294,7 @@ public class ServerRequest {
             }
             catch (Exception e) {
                 e.printStackTrace();
+                existed = false;
             }
             return existed;
         }
