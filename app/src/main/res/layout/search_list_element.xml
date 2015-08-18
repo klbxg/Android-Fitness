@@ -39,16 +39,4 @@
         android:background="@drawable/add_friend"
         style="?android:attr/borderlessButtonStyle" />
 
-    <!--<ImageButton-->
-        <!--android:id="@+id/delete_friend"-->
-        <!--android:layout_width="100dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginTop="0dp"-->
-        <!--android:layout_marginRight ="10dp"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:adjustViewBounds="true"-->
-        <!--android:src="@drawable/delete_friend"-->
-        <!--style="?android:attr/borderlessButtonStyle" />-->
-
 </RelativeLayout>

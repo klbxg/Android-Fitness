@@ -131,12 +131,14 @@ class SearchUserAdapter extends BaseAdapter {
     ArrayList<UserSearched> userList;
     int count;
     Context context;
+
     public SearchUserAdapter(Context context, ArrayList<UserSearched> userList) {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.userList = userList;
         this.context = context;
         this.count = userList.size();
     }
+
     @Override
     public int getCount() {
         return count;
@@ -162,29 +164,27 @@ class SearchUserAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.search_list_element, null);
             holder = new ViewHolder();
-            holder.user_name = (TextView)convertView.findViewById(R.id.search_result_username);
-            holder.user_image = (ImageView)convertView.findViewById(R.id.search_result_userImage);
-            holder.addFriend = (ImageButton)convertView.findViewById(R.id.add_friend);
+            holder.user_name = (TextView) convertView.findViewById(R.id.search_result_username);
+            holder.user_image = (ImageView) convertView.findViewById(R.id.search_result_userImage);
+            holder.addFriend = (ImageButton) convertView.findViewById(R.id.add_friend);
             convertView.setTag(holder);
-        }
-        else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         holder.user_name.setText(userSearched.username);
         new DownloadImage(userSearched.username, holder.user_image).execute();
-        holder.addFriend.setOnClickListener(new FollowClickListener(userSearched, context));
+        holder.addFriend.setOnClickListener(new FollowClickListener(userSearched, context, holder));
         //holder.deleteFriend.setVisibility(View.GONE);
         //holder.user_image.setImageBitmap();
-        Log.d("ttt","ttt");
+        Log.d("ttt", "ttt");
         boolean followed = serverRequest.checkFollowedInBackground(userLocalStore.getLoggedInUser().username, userSearched.username);
         if (!followed) {
             Log.d("Followed", "False");
             holder.addFriend.setImageResource(R.drawable.add_friend);
             holder.addFriend.setOnClickListener(new FollowClickListener(userSearched, context, holder));
             //holder.deleteFriend.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             Log.d("Followed", "True");
             //holder.deleteFriend.setVisibility(View.VISIBLE);
             holder.addFriend.setImageResource(R.drawable.delete_friend);
@@ -193,18 +193,15 @@ class SearchUserAdapter extends BaseAdapter {
         return convertView;
     }
 
-    static class ViewHolder {
-        ImageView user_image;
-        TextView user_name;
-        ImageButton addFriend;
-    }
     private class DownloadImage extends AsyncTask<Void, Void, Bitmap> {
         String name;
         ImageView user_image;
+
         public DownloadImage(String name, ImageView user_image) {
             this.name = name;
             this.user_image = user_image;
         }
+
         @Override
         protected Bitmap doInBackground(Void... params) {
 
@@ -214,11 +211,12 @@ class SearchUserAdapter extends BaseAdapter {
                 connection.setConnectTimeout(1000 * 30);
                 connection.setReadTimeout(1000 * 30);
                 return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
         }
+
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
@@ -227,9 +225,10 @@ class SearchUserAdapter extends BaseAdapter {
             }
         }
     }
+}
 
 class ViewHolder {
-    //ImageView user_image;
+    ImageView user_image;
     TextView user_name;
     ImageButton addFriend;
     //ImageButton deleteFriend;
