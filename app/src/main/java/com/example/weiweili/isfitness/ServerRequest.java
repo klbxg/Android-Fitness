@@ -21,6 +21,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by mengyegong on 7/27/15.
@@ -55,6 +56,18 @@ public class ServerRequest {
         }
         catch (Exception e) {
             e.printStackTrace();
+        }
+        return jObject;
+    }
+    //Get user page
+    public JSONObject fetchUserPageInBackground(String username) {
+        progressDialog.show();
+        JSONObject jObject = new JSONObject();
+        try {
+            jObject = new FetchUserPageAsyncTask(username).execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
         return jObject;
     }
@@ -407,6 +420,43 @@ public class ServerRequest {
             progressDialog.dismiss();
             userCallback.done(returnedUser);
             super.onPostExecute(returnedUser);
+        }
+    }
+    public class FetchUserPageAsyncTask extends AsyncTask<Void, Void, JSONObject> {
+        String username;
+        FetchUserPageAsyncTask(String username) {
+            this.username = username;
+        }
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("username", username));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchContents.php");
+            JSONObject jObject = new JSONObject();
+
+            try{
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                HttpResponse httpResponse = client.execute(post);
+                HttpEntity entity = httpResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                jObject = new JSONObject(result);
+                //Log.d("search", jObject.getJSONArray("username").getString(0));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+            progressDialog.dismiss();
         }
     }
 }

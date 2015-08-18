@@ -8,7 +8,7 @@
 
 
     <ListView
-        android:id="@+id/lvSearchFriendResult"
+        android:id="@+id/lvSearchMyContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
@@ -30,10 +30,12 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:id="@+id/ivphoto"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="5dp"
-        android:layout_above="@+id/lvSearchFriendResult"
-        android:layout_alignEnd="@+id/ivMyPageHead" />
+        android:src="@drawable/default_userimage"
+        android:layout_above="@+id/lvSearchMyContent"
+        android:layout_alignEnd="@+id/ivMyPageHead"
+         />
 
 
 </RelativeLayout>

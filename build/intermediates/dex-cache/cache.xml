@@ -2,18 +2,18 @@
 <items version="2" >
 
     <item
+        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-237a89e682c25529ef04b2bbedca2f674046deda.jar" />
+    </item>
+    <item
         jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
         <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-deeb8986eb265613e2716e162d07d052f9a0a70d.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-c62a3b794e3282154e7ee7cf4e3eb9574b48cddb.jar" />
     </item>
     <item
         jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
@@ -23,11 +23,11 @@
         <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-357d5dc9d8730237db4671969289887f12845fa3.jar" />
     </item>
     <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/jars/classes.jar"
+        jar="/Users/weiweili/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-237a89e682c25529ef04b2bbedca2f674046deda.jar" />
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-c62a3b794e3282154e7ee7cf4e3eb9574b48cddb.jar" />
     </item>
 
 </items>

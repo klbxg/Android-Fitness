@@ -1518,7 +1518,7 @@ containing a value of this type.
         public static final int search=0x7f020042;
     }
     public static final class id {
-        public static final int DownloadImage=0x7f0d0066;
+        public static final int DownloadImage=0x7f0d006a;
         public static final int Imageprev=0x7f0d004f;
         public static final int action_bar=0x7f0d0040;
         public static final int action_bar_activity_content=0x7f0d0000;
@@ -1533,18 +1533,19 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0d003d;
         public static final int action_mode_bar_stub=0x7f0d003c;
         public static final int action_mode_close_button=0x7f0d0025;
-        public static final int action_settings=0x7f0d006c;
+        public static final int action_settings=0x7f0d0073;
         public static final int activity_chooser_view_content=0x7f0d0026;
-        public static final int add_friend=0x7f0d006b;
+        public static final int add_friend=0x7f0d0072;
         public static final int alertTitle=0x7f0d0030;
         public static final int always=0x7f0d0016;
-        public static final int bDownloadImage=0x7f0d0068;
+        public static final int bDownloadImage=0x7f0d006c;
         public static final int bLogin=0x7f0d0053;
         public static final int bLogout=0x7f0d005c;
-        public static final int bRegister=0x7f0d0062;
+        public static final int bMyPage=0x7f0d005e;
+        public static final int bRegister=0x7f0d0065;
         public static final int bSearchUser=0x7f0d0055;
         public static final int bShareContent=0x7f0d005d;
-        public static final int bUploadImage=0x7f0d0065;
+        public static final int bUploadImage=0x7f0d0069;
         public static final int beginning=0x7f0d0013;
         public static final int buttonPanel=0x7f0d0036;
         public static final int checkbox=0x7f0d0038;
@@ -1560,14 +1561,14 @@ containing a value of this type.
         public static final int dropdown=0x7f0d001c;
         public static final int edit_query=0x7f0d0042;
         public static final int end=0x7f0d0014;
-        public static final int etAge=0x7f0d005f;
-        public static final int etDownloadName=0x7f0d0067;
+        public static final int etAge=0x7f0d0062;
+        public static final int etDownloadName=0x7f0d006b;
         public static final int etEmail=0x7f0d005b;
         public static final int etName=0x7f0d0059;
         public static final int etPassword=0x7f0d0052;
-        public static final int etPassword1=0x7f0d0060;
-        public static final int etPassword2=0x7f0d0061;
-        public static final int etUploadName=0x7f0d0064;
+        public static final int etPassword1=0x7f0d0063;
+        public static final int etPassword2=0x7f0d0064;
+        public static final int etUploadName=0x7f0d0068;
         public static final int etUsername=0x7f0d0051;
         public static final int expand_activities_button=0x7f0d0027;
         public static final int expanded_menu=0x7f0d0037;
@@ -1576,11 +1577,15 @@ containing a value of this type.
         public static final int icon=0x7f0d002b;
         public static final int ifRoom=0x7f0d0018;
         public static final int image=0x7f0d0028;
-        public static final int imageToUpload=0x7f0d0063;
+        public static final int imageToUpload=0x7f0d0067;
+        public static final int ivMyPageHead=0x7f0d0060;
         public static final int ivPhoto=0x7f0d0056;
+        public static final int ivPicture=0x7f0d006d;
+        public static final int ivphoto=0x7f0d0061;
         public static final int listMode=0x7f0d0009;
         public static final int list_item=0x7f0d002a;
-        public static final int lvSearchFriendResult=0x7f0d005e;
+        public static final int lvSearchFriendResult=0x7f0d0066;
+        public static final int lvSearchMyContent=0x7f0d005f;
         public static final int middle=0x7f0d0015;
         public static final int multiply=0x7f0d001e;
         public static final int never=0x7f0d0019;
@@ -1597,12 +1602,12 @@ containing a value of this type.
         public static final int search_button=0x7f0d0045;
         public static final int search_close_btn=0x7f0d004a;
         public static final int search_edit_frame=0x7f0d0046;
-        public static final int search_friend=0x7f0d006d;
+        public static final int search_friend=0x7f0d0074;
         public static final int search_go_btn=0x7f0d004c;
         public static final int search_mag_icon=0x7f0d0047;
         public static final int search_plate=0x7f0d0048;
-        public static final int search_result_userImage=0x7f0d0069;
-        public static final int search_result_username=0x7f0d006a;
+        public static final int search_result_userImage=0x7f0d0070;
+        public static final int search_result_username=0x7f0d0071;
         public static final int search_src_text=0x7f0d0049;
         public static final int search_voice_btn=0x7f0d004d;
         public static final int select_dialog_listview=0x7f0d004e;
@@ -1621,8 +1626,10 @@ containing a value of this type.
         public static final int title_template=0x7f0d002f;
         public static final int topPanel=0x7f0d002e;
         public static final int tvEmail=0x7f0d005a;
+        public static final int tvFeeling=0x7f0d006e;
         public static final int tvName=0x7f0d0058;
         public static final int tvRegisterLink=0x7f0d0054;
+        public static final int tvTime=0x7f0d006f;
         public static final int tvUsername=0x7f0d0057;
         public static final int up=0x7f0d0008;
         public static final int useLogo=0x7f0d0012;
@@ -1667,11 +1674,12 @@ containing a value of this type.
         public static final int activity_register=0x7f04001d;
         public static final int activity_search_user=0x7f04001e;
         public static final int activity_share_content=0x7f04001f;
-        public static final int search_list_element=0x7f040020;
-        public static final int select_dialog_item_material=0x7f040021;
-        public static final int select_dialog_multichoice_material=0x7f040022;
-        public static final int select_dialog_singlechoice_material=0x7f040023;
-        public static final int support_simple_spinner_dropdown_item=0x7f040024;
+        public static final int mypage_list_element=0x7f040020;
+        public static final int search_list_element=0x7f040021;
+        public static final int select_dialog_item_material=0x7f040022;
+        public static final int select_dialog_multichoice_material=0x7f040023;
+        public static final int select_dialog_singlechoice_material=0x7f040024;
+        public static final int support_simple_spinner_dropdown_item=0x7f040025;
     }
     public static final class menu {
         public static final int menu_group_sharing=0x7f0e0000;
