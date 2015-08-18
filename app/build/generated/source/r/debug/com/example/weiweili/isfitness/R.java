@@ -1541,7 +1541,7 @@ containing a value of this type.
         public static final int bDownloadImage=0x7f0d0068;
         public static final int bLogin=0x7f0d0053;
         public static final int bLogout=0x7f0d005c;
-        public static final int bRegister=0x7f0d0061;
+        public static final int bRegister=0x7f0d0062;
         public static final int bSearchUser=0x7f0d0055;
         public static final int bShareContent=0x7f0d005d;
         public static final int bUploadImage=0x7f0d0065;
@@ -1560,13 +1560,13 @@ containing a value of this type.
         public static final int dropdown=0x7f0d001c;
         public static final int edit_query=0x7f0d0042;
         public static final int end=0x7f0d0014;
-        public static final int etAge=0x7f0d005e;
+        public static final int etAge=0x7f0d005f;
         public static final int etDownloadName=0x7f0d0067;
         public static final int etEmail=0x7f0d005b;
         public static final int etName=0x7f0d0059;
         public static final int etPassword=0x7f0d0052;
-        public static final int etPassword1=0x7f0d005f;
-        public static final int etPassword2=0x7f0d0060;
+        public static final int etPassword1=0x7f0d0060;
+        public static final int etPassword2=0x7f0d0061;
         public static final int etUploadName=0x7f0d0064;
         public static final int etUsername=0x7f0d0051;
         public static final int expand_activities_button=0x7f0d0027;
@@ -1580,7 +1580,7 @@ containing a value of this type.
         public static final int ivPhoto=0x7f0d0056;
         public static final int listMode=0x7f0d0009;
         public static final int list_item=0x7f0d002a;
-        public static final int lvSearchFriendResult=0x7f0d0062;
+        public static final int lvSearchFriendResult=0x7f0d005e;
         public static final int middle=0x7f0d0015;
         public static final int multiply=0x7f0d001e;
         public static final int never=0x7f0d0019;

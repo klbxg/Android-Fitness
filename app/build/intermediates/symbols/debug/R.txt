@@ -434,7 +434,7 @@ int id always 0x7f0d0016
 int id bDownloadImage 0x7f0d0068
 int id bLogin 0x7f0d0053
 int id bLogout 0x7f0d005c
-int id bRegister 0x7f0d0061
+int id bRegister 0x7f0d0062
 int id bSearchUser 0x7f0d0055
 int id bShareContent 0x7f0d005d
 int id bUploadImage 0x7f0d0065
@@ -453,13 +453,13 @@ int id disableHome 0x7f0d000c
 int id dropdown 0x7f0d001c
 int id edit_query 0x7f0d0042
 int id end 0x7f0d0014
-int id etAge 0x7f0d005e
+int id etAge 0x7f0d005f
 int id etDownloadName 0x7f0d0067
 int id etEmail 0x7f0d005b
 int id etName 0x7f0d0059
 int id etPassword 0x7f0d0052
-int id etPassword1 0x7f0d005f
-int id etPassword2 0x7f0d0060
+int id etPassword1 0x7f0d0060
+int id etPassword2 0x7f0d0061
 int id etUploadName 0x7f0d0064
 int id etUsername 0x7f0d0051
 int id expand_activities_button 0x7f0d0027
@@ -473,7 +473,7 @@ int id imageToUpload 0x7f0d0063
 int id ivPhoto 0x7f0d0056
 int id listMode 0x7f0d0009
 int id list_item 0x7f0d002a
-int id lvSearchFriendResult 0x7f0d0062
+int id lvSearchFriendResult 0x7f0d005e
 int id middle 0x7f0d0015
 int id multiply 0x7f0d001e
 int id never 0x7f0d0019
