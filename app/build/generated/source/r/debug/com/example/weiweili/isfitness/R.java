@@ -1514,7 +1514,8 @@ containing a value of this type.
         public static final int default_userimage=0x7f02003e;
         public static final int delete_friend=0x7f02003f;
         public static final int image_btn_press=0x7f020040;
-        public static final int search=0x7f020041;
+        public static final int mypage_head=0x7f020041;
+        public static final int search=0x7f020042;
     }
     public static final class id {
         public static final int DownloadImage=0x7f0d0066;

@@ -65,6 +65,12 @@ public class ServerRequest {
         new AddFollowAsyncTask(username, wantfollow, callback).execute();
     }
 
+    // Delete follow in background
+    public void unFollowInBackground(String username, String wantunfollow, UnFollowCallBack callback) {
+        progressDialog.show();
+        new UnFollowAsyncTask(username, wantunfollow, callback).execute();
+    }
+
     // Check whether followed in background
     public boolean checkFollowedInBackground(String username, String otherUserName) {
         boolean result = false;
@@ -180,6 +186,48 @@ public class ServerRequest {
             super.onPostExecute(aVoid);
         }
     }
+
+    public class UnFollowAsyncTask extends AsyncTask<Void, Void, Void> {
+        String username;
+        String wantunfollow;
+        UnFollowCallBack callback;
+
+        public UnFollowAsyncTask(String username, String wantunfollow, UnFollowCallBack callback) {
+            this.username = username;
+            this.wantunfollow = wantunfollow;
+            this.callback = callback;
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("username", username));
+            dataToSend.add(new BasicNameValuePair("wantunfollow", wantunfollow));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "UnFollow.php");
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                client.execute(post);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            callback.done();
+            super.onPostExecute(aVoid);
+        }
+    }
+
     public class StoreUserDataAsyncTask extends AsyncTask<Void, Void, Void> {
         User user;
         GetUserCallBack userCallback;

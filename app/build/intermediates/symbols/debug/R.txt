@@ -409,7 +409,8 @@ int drawable bg_login 0x7f02003d
 int drawable default_userimage 0x7f02003e
 int drawable delete_friend 0x7f02003f
 int drawable image_btn_press 0x7f020040
-int drawable search 0x7f020041
+int drawable mypage_head 0x7f020041
+int drawable search 0x7f020042
 int id DownloadImage 0x7f0d0066
 int id Imageprev 0x7f0d004f
 int id action_bar 0x7f0d0040
