@@ -33,7 +33,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:id="@+id/ivPhoto"
-                android:layout_below="@+id/bSearchUser"/>
+                android:layout_below="@+id/bSearchUser"
+                android:src="@drawable/default_userimage"/>
 
 
 <TextView

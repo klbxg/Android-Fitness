@@ -231,6 +231,7 @@ public class ServerRequest {
                     int age = jObject.getInt("age");
                     String email = jObject.getString("email");
                     String username = jObject.getString("username");
+                    //String
                     returnedUser = new User(name, age, username, email, user.password, null);
                 }
             }

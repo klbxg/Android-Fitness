@@ -2,6 +2,7 @@ package com.example.weiweili.isfitness;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -28,6 +29,9 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 
@@ -111,7 +115,7 @@ public class ShareContent extends ActionBarActivity implements View.OnClickListe
                 break;
 
             case R.id.bDownloadImage:
-
+                new DownloadImage(etDownloadImageName.getText().toString()).execute();
                 break;
         }
     }
@@ -153,12 +157,43 @@ public class ShareContent extends ActionBarActivity implements View.OnClickListe
             Toast.makeText(getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private class DownloadImage extends AsyncTask<Void, Void, Bitmap>{
+        String name;
+        public DownloadImage(String name) {
+            this.name = name;
+        }
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+
+            String url = SERVER_ADDRESS + "pictures/" + name + ".JPG";
+            try {
+                URLConnection connection = new URL(url).openConnection();
+                connection.setConnectTimeout(1000 * 30);
+                connection.setReadTimeout(1000 * 30);
+                return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
+            }catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if (bitmap != null) {
+                DownloadImage.setImageBitmap(bitmap);
+            }
+        }
+    }
+
     private HttpParams getHttpRequestParams() {
         HttpParams httpRequestParams = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(httpRequestParams, 1000 * 30);
         HttpConnectionParams.setSoTimeout(httpRequestParams, 1000 * 30);
         return httpRequestParams;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -2,6 +2,7 @@ package com.example.weiweili.isfitness;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -28,6 +29,9 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 
@@ -84,6 +88,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         etUsername.setText(user.username);
         etEmail.setText(user.email);
         etName.setText(user.name);
+        new DownloadImage().execute();
 
     }
 
@@ -166,6 +171,30 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             Bitmap image = ((BitmapDrawable) ivPhoto.getDrawable()).getBitmap();
             new Uploadphoto(image, user.username).execute();
 
+        }
+    }
+
+    private class DownloadImage extends AsyncTask<Void, Void, Bitmap>{
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+            User user = userLocalStore.getLoggedInUser();
+            String url = SERVER_ADDRESS + "photo/" + user.username + ".JPG";
+            try {
+                URLConnection connection = new URL(url).openConnection();
+                connection.setConnectTimeout(1000 * 30);
+                connection.setReadTimeout(1000 * 30);
+                return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
+            }catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if (bitmap != null) {
+                ivPhoto.setImageBitmap(bitmap);
+            }
         }
     }
 

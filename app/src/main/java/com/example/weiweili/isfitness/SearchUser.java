@@ -4,6 +4,9 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +28,10 @@ import android.view.View.OnClickListener;
 
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.lang.reflect.Array;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 
@@ -112,6 +118,8 @@ class UserSearched {
 }
 
 class SearchUserAdapter extends BaseAdapter {
+    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
     private LayoutInflater layoutInflater;
     ArrayList<UserSearched> userList;
     int count;
@@ -146,7 +154,7 @@ class SearchUserAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.search_list_element, null);
             holder = new ViewHolder();
             holder.user_name = (TextView)convertView.findViewById(R.id.search_result_username);
-            //holder.user_image = (ImageView)convertView.findViewById(R.id.search_result_userImage);
+            holder.user_image = (ImageView)convertView.findViewById(R.id.search_result_userImage);
             holder.addFriend = (ImageButton)convertView.findViewById(R.id.add_friend);
             convertView.setTag(holder);
         }
@@ -155,17 +163,47 @@ class SearchUserAdapter extends BaseAdapter {
         }
 
         holder.user_name.setText(userSearched.username);
-        //holder.user_image.setImageBitmap();
+        new DownloadImage(userSearched.username, holder.user_image).execute();
         holder.addFriend.setOnClickListener(new FollowClickListener(userSearched, context));
 
         return convertView;
     }
 
     static class ViewHolder {
-        //ImageView user_image;
+        ImageView user_image;
         TextView user_name;
         ImageButton addFriend;
     }
+    private class DownloadImage extends AsyncTask<Void, Void, Bitmap> {
+        String name;
+        ImageView user_image;
+        public DownloadImage(String name, ImageView user_image) {
+            this.name = name;
+            this.user_image = user_image;
+        }
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+
+            String url = SERVER_ADDRESS + "photo/" + name + ".JPG";
+            try {
+                URLConnection connection = new URL(url).openConnection();
+                connection.setConnectTimeout(1000 * 30);
+                connection.setReadTimeout(1000 * 30);
+                return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
+            }catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if (bitmap != null) {
+                user_image.setImageBitmap(bitmap);
+            }
+        }
+    }
+
 }
 
 // this is the follow button click listener

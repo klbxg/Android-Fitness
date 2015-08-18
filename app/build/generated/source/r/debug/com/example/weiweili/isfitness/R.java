@@ -1509,9 +1509,11 @@ containing a value of this type.
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020039;
         public static final int abc_textfield_search_material=0x7f02003a;
         public static final int add_friend=0x7f02003b;
-        public static final int bg_login=0x7f02003c;
-        public static final int default_userimage=0x7f02003d;
-        public static final int search=0x7f02003e;
+        public static final int add_friend_press=0x7f02003c;
+        public static final int bg_login=0x7f02003d;
+        public static final int default_userimage=0x7f02003e;
+        public static final int image_btn_press=0x7f02003f;
+        public static final int search=0x7f020040;
     }
     public static final class id {
         public static final int DownloadImage=0x7f0d0066;
@@ -1529,9 +1531,9 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0d003d;
         public static final int action_mode_bar_stub=0x7f0d003c;
         public static final int action_mode_close_button=0x7f0d0025;
-        public static final int action_settings=0x7f0d006b;
+        public static final int action_settings=0x7f0d006c;
         public static final int activity_chooser_view_content=0x7f0d0026;
-        public static final int add_friend=0x7f0d006a;
+        public static final int add_friend=0x7f0d006b;
         public static final int alertTitle=0x7f0d0030;
         public static final int always=0x7f0d0016;
         public static final int bDownloadImage=0x7f0d0068;
@@ -1593,11 +1595,12 @@ containing a value of this type.
         public static final int search_button=0x7f0d0045;
         public static final int search_close_btn=0x7f0d004a;
         public static final int search_edit_frame=0x7f0d0046;
-        public static final int search_friend=0x7f0d006c;
+        public static final int search_friend=0x7f0d006d;
         public static final int search_go_btn=0x7f0d004c;
         public static final int search_mag_icon=0x7f0d0047;
         public static final int search_plate=0x7f0d0048;
-        public static final int search_result_username=0x7f0d0069;
+        public static final int search_result_userImage=0x7f0d0069;
+        public static final int search_result_username=0x7f0d006a;
         public static final int search_src_text=0x7f0d0049;
         public static final int search_voice_btn=0x7f0d004d;
         public static final int select_dialog_listview=0x7f0d004e;

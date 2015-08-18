@@ -33,7 +33,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:id="@+id/ivPhoto"
-                android:layout_below="@+id/bSearchUser"/>
+                android:layout_below="@+id/bSearchUser"
+                android:src="@drawable/default_userimage"/>
 
 
 <TextView
@@ -113,4 +114,4 @@
 </ScrollView>
 
 
-<!-- From: file:/Users/mengyegong/Documents/project/Android/Android-Fitness/app/src/main/res/layout/activity_main.xml -->
+<!-- From: file:/Users/weiweili/Documents/android%20mobile/Android-Fitness/app/src/main/res/layout/activity_main.xml -->
