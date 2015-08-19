@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvFollowFeeling"
+        android:layout_alignTop="@+id/tvFollowTime"
+        android:layout_centerHorizontal="true"
+        android:text="jaldjflajdlfjaldfja"
+        android:textSize="15dp"
+        android:typeface="serif"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/tvFollowTime"/>
+
+    <ImageView
+        android:id="@+id/ivFollowPicture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/default_userimage"
+        android:layout_below="@+id/tvFollowFeeling"
+        android:layout_toRightOf="@+id/tvFollowTime"
+        android:layout_marginLeft="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/tvFollowTime"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textSize="18dp"
+        android:text="Aug/19"
+        android:textStyle="bold"
+        android:typeface="sans"
+        />
+
+</RelativeLayout>
