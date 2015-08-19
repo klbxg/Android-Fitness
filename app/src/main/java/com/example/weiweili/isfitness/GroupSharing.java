@@ -1,5 +1,6 @@
 package com.example.weiweili.isfitness;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -11,9 +12,12 @@ import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -67,7 +71,8 @@ public class GroupSharing extends ActionBarActivity implements View.OnClickListe
 
                 followedUsers.add(new FollowedUser(temp));
             }
-            //lvGroupSharing.setAdapter(new SearchContentAdapter(this, contents));
+
+            lvGroupSharing.setAdapter(new GroupSharingAdapter(this, followedUsers));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -132,6 +137,90 @@ public class GroupSharing extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
+    }
+}
+
+class GroupSharingAdapter extends BaseAdapter {
+    private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
+    private LayoutInflater layoutInflater;
+    ArrayList<UserSearched> userList;
+    int count;
+    Context context;
+
+    public GroupSharingAdapter(Context context, ArrayList<UserSearched> userList) {
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.userList = userList;
+        this.context = context;
+        this.count = userList.size();
+    }
+
+    @Override
+    public int getCount() {
+        return count;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return userList.get(position);
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+        UserSearched userSearched = userList.get(position);
+
+        if (convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.search_list_element, null);
+            holder = new ViewHolder();
+            holder.user_name = (TextView) convertView.findViewById(R.id.search_result_username);
+            holder.user_image = (ImageView) convertView.findViewById(R.id.search_result_userImage);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        holder.user_name.setText(userSearched.username);
+        new DownloadImage(userSearched.username, holder.user_image).execute();
+
+        return convertView;
+    }
+
+    private class DownloadImage extends AsyncTask<Void, Void, Bitmap> {
+        String name;
+        ImageView user_image;
+
+        public DownloadImage(String name, ImageView user_image) {
+            this.name = name;
+            this.user_image = user_image;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+
+            String url = SERVER_ADDRESS + "photo/" + name + ".JPG";
+            try {
+                URLConnection connection = new URL(url).openConnection();
+                connection.setConnectTimeout(1000 * 30);
+                connection.setReadTimeout(1000 * 30);
+                return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if (bitmap != null) {
+                user_image.setImageBitmap(bitmap);
+            }
+        }
     }
 }
 
