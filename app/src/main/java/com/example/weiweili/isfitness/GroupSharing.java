@@ -1,14 +1,10 @@
 package com.example.weiweili.isfitness;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.MediaStore;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +17,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,31 +25,48 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import com.example.weiweili.isfitness.XListView.IXListViewListener;
 
 
-public class GroupSharing extends ActionBarActivity implements View.OnClickListener{
-    ListView lvGroupSharing;
+public class GroupSharing extends ActionBarActivity implements IXListViewListener {
+    XListView lvGroupSharing;
     ImageView ivFrinedPicture, ivFrPhoto, ivGroupSharingPhoto,ivGroupSharingHead;
     TextView tvFriendName, tvFriendFeeling;
+    private Handler mHandler;
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
+    UserLocalStore userLocalStore;
+    String username;
+    int offset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_sharing);
-        lvGroupSharing = (ListView) findViewById(R.id.lvGroupSharing);
+        lvGroupSharing = (XListView) findViewById(R.id.lvGroupSharing);
+        lvGroupSharing.setPullLoadEnable(true);
+        lvGroupSharing.setPullRefreshEnable(false);
+        lvGroupSharing.setXListViewListener(this);
+        mHandler = new Handler();
         ivFrinedPicture = (ImageView) findViewById(R.id.ivFrinedPicture);
         ivFrPhoto = (ImageView) findViewById(R.id.ivFrPhoto);
         ivGroupSharingPhoto = (ImageView) findViewById(R.id.ivGroupSharingPhoto);
         tvFriendName = (TextView) findViewById(R.id.tvFriendName);
         tvFriendFeeling = (TextView) findViewById(R.id.tvFriendFeeling);
 
-        UserLocalStore userLocalStore = new UserLocalStore(this);
-        String username = userLocalStore.getLoggedInUser().username;
-        Log.d("username", username);
+        offset = 0;
+
+        userLocalStore = new UserLocalStore(this);
+        username = userLocalStore.getLoggedInUser().username;
+
         new DownloadPhoto(username, ivGroupSharingPhoto).execute();
         doSearchFriends(username);
 
+    }
+
+    private void onLoad() {
+        lvGroupSharing.stopRefresh();
+        lvGroupSharing.stopLoadMore();
+        lvGroupSharing.setRefreshTime("刚刚");
     }
 
     private void doSearchFriends(String username) {
@@ -78,6 +90,15 @@ public class GroupSharing extends ActionBarActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -134,20 +155,16 @@ public class GroupSharing extends ActionBarActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
 }
 
 class GroupSharingAdapter extends BaseAdapter {
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
     private LayoutInflater layoutInflater;
-    ArrayList<UserSearched> userList;
+    ArrayList<FollowedUser> userList;
     int count;
     Context context;
 
-    public GroupSharingAdapter(Context context, ArrayList<UserSearched> userList) {
+    public GroupSharingAdapter(Context context, ArrayList<FollowedUser> userList) {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.userList = userList;
         this.context = context;
@@ -172,7 +189,7 @@ class GroupSharingAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        UserSearched userSearched = userList.get(position);
+        FollowedUser followedUser = userList.get(position);
 
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.search_list_element, null);
@@ -184,8 +201,8 @@ class GroupSharingAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.user_name.setText(userSearched.username);
-        new DownloadImage(userSearched.username, holder.user_image).execute();
+        holder.user_name.setText(followedUser.username);
+        new DownloadImage(followedUser.username, holder.user_image).execute();
 
         return convertView;
     }
