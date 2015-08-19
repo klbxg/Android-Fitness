@@ -116,8 +116,16 @@
             android:id="@+id/bMyPage"
             android:layout_gravity="center_horizontal"
             android:layout_below="@+id/bShareContent" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Group Sharing"
+            android:id="@+id/bGroupSharing"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/bMyPage" />
 
-</RelativeLayout>
+
+    </RelativeLayout>
 
 </ScrollView>
 

@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
 
-    Button bLogout, bSearchUser, bShareContent, bMyPage;
+    Button bLogout, bSearchUser, bShareContent, bMyPage, bGroupSharing;
     EditText etName, etEmail, etUsername;
     ImageView ivPhoto;
 
@@ -62,12 +62,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         bShareContent = (Button) findViewById(R.id.bShareContent);
         bSearchUser = (Button) findViewById(R.id.bSearchUser);
         bMyPage = (Button) findViewById(R.id.bMyPage);
+        bGroupSharing = (Button) findViewById(R.id.bGroupSharing);
         ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
 
         bLogout.setOnClickListener(this);
         bShareContent.setOnClickListener(this);
         bSearchUser.setOnClickListener(this);
         bMyPage.setOnClickListener(this);
+        bGroupSharing.setOnClickListener(this);
         ivPhoto.setOnClickListener(this);
 
         userLocalStore = new UserLocalStore(this);
@@ -123,6 +125,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             case R.id.bMyPage:
                 Intent intent3 = new Intent(MainActivity.this, MyPage.class);
                 startActivity(intent3);
+                break;
+
+            case R.id.bGroupSharing:
+                Intent intent4 = new Intent(MainActivity.this, GroupSharing.class);
+                startActivity(intent4);
                 break;
         }
     }
