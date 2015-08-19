@@ -10,4 +10,5 @@
     <string name="search_hint">Search Friends</string>
     <string name="title_search_friend">Search Friends</string>
     <string name="title_activity_share_content">ShareContent</string>
+    <string name="title_activity_follow_handle">FollowHandle</string>
 </resources>

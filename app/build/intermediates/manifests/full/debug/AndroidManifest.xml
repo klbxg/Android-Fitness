@@ -64,6 +64,10 @@
             android:name="com.example.weiweili.isfitness.ShareContent"
             android:label="@string/title_activity_share_content" >
         </activity>
+        <activity
+            android:name="com.example.weiweili.isfitness.FollowHandle"
+            android:label="@string/title_activity_follow_handle" >
+        </activity>
     </application>
 
 </manifest>

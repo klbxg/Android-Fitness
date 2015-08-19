@@ -2,7 +2,6 @@ package com.example.weiweili.isfitness;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,28 +15,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
 
 public class SearchUser extends ActionBarActivity {
-    EditText etSearchFriendResult;
     ListView lvSearchFriendResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +53,7 @@ public class SearchUser extends ActionBarActivity {
 
         ServerRequest serverRequest = new ServerRequest(this);
         UserLocalStore userLocalStore = new UserLocalStore(this);
-        String useNow = userLocalStore.getLoggedInUser().username;
+        final String userNow = userLocalStore.getLoggedInUser().username;
         JSONObject result = serverRequest.fetchSearchUserInBackground(query);
         try{
             ArrayList<UserSearched> users = new ArrayList<>();
@@ -69,12 +62,23 @@ public class SearchUser extends ActionBarActivity {
 
             for (int i = 0; i < length; i++) {
                 String tmp = result.getJSONArray("username").getString(i);
-                if (tmp.compareTo(useNow) != 0) {
+                if (tmp.compareTo(userNow) != 0) {
                     users.add(new UserSearched(tmp));
                 }
             }
 
             lvSearchFriendResult.setAdapter(new SearchUserAdapter(this, users));
+            lvSearchFriendResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    UserSearched itemClicked = (UserSearched)parent.getItemAtPosition(position);
+                    Intent intent = new Intent(SearchUser.this, FollowHandle.class);
+                    intent.putExtra("userNow", userNow);
+                    intent.putExtra("userSelect", itemClicked.username);
+                    startActivity(intent);
+                    Log.d("clicklist", itemClicked.username);
+                }
+            });
         }
         catch (Exception e) {
 
@@ -114,18 +118,12 @@ public class SearchUser extends ActionBarActivity {
 
 class UserSearched {
     String username;
-    //String userimage;
-//    public UserSearched(String username, String userimage) {
-//        this.username = username;
-//        this.userimage = userimage;
-//    }
     public UserSearched(String username) {
         this.username = username;
     }
 }
 
 class SearchUserAdapter extends BaseAdapter {
-    private static final int RESULT_LOAD_IMAGE = 1;
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
     private LayoutInflater layoutInflater;
     ArrayList<UserSearched> userList;
@@ -158,15 +156,12 @@ class SearchUserAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         UserSearched userSearched = userList.get(position);
-        ServerRequest serverRequest = new ServerRequest(context);
-        UserLocalStore userLocalStore = new UserLocalStore(context);
 
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.search_list_element, null);
             holder = new ViewHolder();
             holder.user_name = (TextView) convertView.findViewById(R.id.search_result_username);
             holder.user_image = (ImageView) convertView.findViewById(R.id.search_result_userImage);
-            holder.addFriend = (ImageButton) convertView.findViewById(R.id.add_friend);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -174,19 +169,6 @@ class SearchUserAdapter extends BaseAdapter {
 
         holder.user_name.setText(userSearched.username);
         new DownloadImage(userSearched.username, holder.user_image).execute();
-        holder.addFriend.setOnClickListener(new FollowClickListener(userSearched, context, holder));
-
-        Log.d("ttt", "ttt");
-        boolean followed = serverRequest.checkFollowedInBackground(userLocalStore.getLoggedInUser().username, userSearched.username);
-        if (!followed) {
-            Log.d("Followed", "False");
-            holder.addFriend.setImageResource(R.drawable.add_friend);
-            holder.addFriend.setOnClickListener(new FollowClickListener(userSearched, context, holder));
-        } else {
-            Log.d("Followed", "True");
-            holder.addFriend.setImageResource(R.drawable.delete_friend);
-            holder.addFriend.setOnClickListener(new UnFollowClickListener(userSearched, context, holder));
-        }
 
         return convertView;
     }
@@ -228,65 +210,4 @@ class SearchUserAdapter extends BaseAdapter {
 class ViewHolder {
     ImageView user_image;
     TextView user_name;
-    ImageButton addFriend;
-}
-
-// this is the follow button click listener
-class FollowClickListener implements OnClickListener {
-    UserSearched userSearched;
-    Context context;
-    UserLocalStore userLocalStore;
-    ViewHolder holder;
-
-    public FollowClickListener(UserSearched userSearched, Context context, ViewHolder holder) {
-        this.userSearched = userSearched;
-        this.context = context;
-        userLocalStore = new UserLocalStore(context);
-        this.holder = holder;
-    }
-
-    @Override
-    public void onClick(View v) {
-        // update the database to follow
-        ServerRequest serverRequest = new ServerRequest(context);
-        serverRequest.addFollowInBackground(userLocalStore.getLoggedInUser().username, userSearched.username, new AddFollowCallBack() {
-            @Override
-            public void done() {
-                holder.addFriend.setImageResource(R.drawable.delete_friend);
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, "Follow " + userSearched.username + " Success", duration);
-                toast.show();
-            }
-        });
-    }
-}
-
-// this is the follow button click listener
-class UnFollowClickListener implements OnClickListener {
-    UserSearched userSearched;
-    Context context;
-    UserLocalStore userLocalStore;
-    ViewHolder holder;
-
-    public UnFollowClickListener(UserSearched userSearched, Context context, ViewHolder holder) {
-        this.userSearched = userSearched;
-        this.context = context;
-        userLocalStore = new UserLocalStore(context);
-        this.holder = holder;
-    }
-
-    @Override
-    public void onClick(View v) {
-        // update the database to follow
-        ServerRequest serverRequest = new ServerRequest(context);
-        serverRequest.unFollowInBackground(userLocalStore.getLoggedInUser().username, userSearched.username, new UnFollowCallBack() {
-            @Override
-            public void done() {
-                holder.addFriend.setImageResource(R.drawable.add_friend);
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, "UnFollow " + userSearched.username + " Success", duration);
-                toast.show();
-            }
-        });
-    }
 }
