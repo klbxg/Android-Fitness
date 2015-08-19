@@ -7,7 +7,7 @@
     tools:context="com.example.weiweili.isfitness.FollowHandle">
 
     <ImageView
-        android:id="@+id/search_result_userImage"
+        android:id="@+id/user_selected_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft = "5dp"
@@ -16,7 +16,7 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:id="@+id/search_result_username"
+        android:id="@+id/user_selected_name"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"

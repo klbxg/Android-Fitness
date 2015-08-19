@@ -31,8 +31,8 @@ public class FollowHandle extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_handle);
-        userImage = (ImageView) findViewById(R.id.search_result_userImage);
-        selectedUserName = (TextView) findViewById(R.id.search_result_username);
+        userImage = (ImageView) findViewById(R.id.user_selected_image);
+        selectedUserName = (TextView) findViewById(R.id.user_selected_name);
         addFriend = (ImageButton) findViewById(R.id.add_friend);
         intent = this.getIntent();
     }

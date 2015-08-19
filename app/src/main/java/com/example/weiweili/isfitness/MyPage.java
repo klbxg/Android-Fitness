@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -24,32 +23,51 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.lang.Object;
 
+import com.example.weiweili.isfitness.XListView.IXListViewListener;
 
-public class MyPage extends ActionBarActivity {
-    ListView lvSearchMyContent;
+public class MyPage extends ActionBarActivity implements IXListViewListener {
+//    ListView lvSearchMyContent;
+    XListView lvSearchMyContent;
     ImageView ivphoto;
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
-
+    private Handler mHandler;
+    ArrayList<UserContent> contents = new ArrayList<>();
+    SearchContentAdapter myAdapter;
+    int offset;    // the database offset for searching use content, it should + 5 every pull up refresh
+    UserLocalStore userLocalStore;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_page);
 
-        lvSearchMyContent = (ListView) findViewById(R.id.lvSearchMyContent);
+        lvSearchMyContent = (XListView) findViewById(R.id.lvSearchMyContent);
+        lvSearchMyContent.setPullLoadEnable(true);
+        lvSearchMyContent.setPullRefreshEnable(false);
+        lvSearchMyContent.setXListViewListener(this);
+        mHandler = new Handler();
         ivphoto = (ImageView) findViewById(R.id.ivphoto);
 
-        UserLocalStore userLocalStore = new UserLocalStore(this);
-        String username = userLocalStore.getLoggedInUser().username;
+        offset = 0;
+
+        userLocalStore = new UserLocalStore(this);
+        username = userLocalStore.getLoggedInUser().username;
+
         Log.d("username", username);
         new DownloadPhoto(username, ivphoto).execute();
-        doSearchContents(username);
+        doSearchContents(username, contents, offset);
+        myAdapter = new SearchContentAdapter(this, contents);
+        lvSearchMyContent.setAdapter(myAdapter);
+    }
 
-
+    private void onLoad() {
+        lvSearchMyContent.stopRefresh();
+        lvSearchMyContent.stopLoadMore();
+        lvSearchMyContent.setRefreshTime("刚刚");
     }
 //    @Override
 //    protected void onStart() {
@@ -57,27 +75,26 @@ public class MyPage extends ActionBarActivity {
 //
 //    }
 
-    private void doSearchContents(String username) {
+    private void doSearchContents(String username, ArrayList<UserContent> contents, int offset) {
         ServerRequest serverRequest = new ServerRequest(this);
-        JSONObject result = serverRequest.fetchUserPageInBackground(username);
+        JSONObject result = serverRequest.fetchUserPageInBackground(username, offset);
         Log.d("result", result.toString());
         try{
-            ArrayList<UserContent> contents = new ArrayList<>();
             int length = result.getJSONArray("contents").length();
             for (int i = 0; i < length; i++) {
                 JSONObject content = result.getJSONArray("contents").getJSONObject(i);
                 String feeling = content.getString("feeling");
                 String picName = content.getString("picName");
                 String time = content.getString("time");
-                Log.d("time", time);
 
                 contents.add(new UserContent(feeling, picName, time));
             }
-            lvSearchMyContent.setAdapter(new SearchContentAdapter(this, contents));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,6 +116,24 @@ public class MyPage extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onLoadMore() {
+        offset += 5;
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doSearchContents(username, contents, offset);
+                myAdapter.refresh(contents);
+                onLoad();
+            }
+        }, 2000);
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 
     private class DownloadPhoto extends AsyncTask<Void, Void, Bitmap> {
@@ -158,6 +193,12 @@ class SearchContentAdapter extends BaseAdapter {
         this.contentList = contentList;
         this.context = context;
         this.count = contentList.size();
+    }
+
+    public void refresh(ArrayList<UserContent> contentList) {
+        this.contentList = contentList;
+        this.count = contentList.size();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -269,8 +310,9 @@ class SearchContentAdapter extends BaseAdapter {
         }
     }
 }
-    class ContentViewHolder {
-        ImageView picture;
-        TextView feeling;
-        TextView time;
-    }
+
+class ContentViewHolder {
+    ImageView picture;
+    TextView feeling;
+    TextView time;
+}

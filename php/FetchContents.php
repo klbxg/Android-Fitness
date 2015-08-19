@@ -3,8 +3,12 @@
 	$con=mysqli_connect("mysql4.000webhost.com", "a2635382_fitness", "woaiwo+0555", "a2635382_fitDB");
 
 	$username = $_POST["username"];
+	$offset = $_POST["offset"];
 
-	$statement = mysqli_prepare($con, "SELECT * FROM shareContent WHERE owner = '$username' ORDER BY time DESC LIMIT 5");
+	// $username = "vivi";
+	// $offset = "2";
+
+	$statement = mysqli_prepare($con, "SELECT * FROM shareContent WHERE owner = '$username' ORDER BY time DESC LIMIT $offset, 5");
 	mysqli_stmt_execute($statement);
 	mysqli_stmt_store_result($statement);
 	mysqli_stmt_bind_result($statement, $owner, $feeling, $picName, $id, $time);

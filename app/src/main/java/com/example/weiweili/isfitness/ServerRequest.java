@@ -60,11 +60,11 @@ public class ServerRequest {
         return jObject;
     }
     //Get user page
-    public JSONObject fetchUserPageInBackground(String username) {
+    public JSONObject fetchUserPageInBackground(String username, int offset) {
         progressDialog.show();
-        JSONObject jObject = new JSONObject();
+        JSONObject jObject;
         try {
-            jObject = new FetchUserPageAsyncTask(username).execute().get();
+            jObject = new FetchUserPageAsyncTask(username, offset).execute().get();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -436,13 +436,16 @@ public class ServerRequest {
     }
     public class FetchUserPageAsyncTask extends AsyncTask<Void, Void, JSONObject> {
         String username;
-        public FetchUserPageAsyncTask(String username) {
+        String offset;
+        FetchUserPageAsyncTask(String username, int offset) {
             this.username = username;
+            this.offset = offset + "";
         }
         @Override
         protected JSONObject doInBackground(Void... params) {
             ArrayList<NameValuePair> dataToSend = new ArrayList<>();
             dataToSend.add(new BasicNameValuePair("username", username));
+            dataToSend.add(new BasicNameValuePair("offset", offset));
 
             HttpParams httpRequestParams = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
