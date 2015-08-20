@@ -39,9 +39,9 @@ public class ShareContent extends ActionBarActivity implements View.OnClickListe
     private static final int RESULT_LOAD_IMAGE = 1;
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
 
-    Button bUploadImage, bDownloadImage;
-    EditText etUploadImageName, etDownloadImageName;
-    ImageView imageToUpload, DownloadImage;
+    Button bUploadImage;
+    EditText etUploadImageName;
+    ImageView imageToUpload;
     UserLocalStore userLocalStore;
 
     @Override
@@ -50,17 +50,13 @@ public class ShareContent extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_share_content);
 
         etUploadImageName = (EditText) findViewById(R.id.etUploadName);
-        etDownloadImageName = (EditText) findViewById(R.id.etDownloadName);
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
-        DownloadImage = (ImageView) findViewById(R.id.DownloadImage);
 
         bUploadImage = (Button) findViewById(R.id.bUploadImage);
-        bDownloadImage = (Button) findViewById(R.id.bDownloadImage);
 
         imageToUpload.setOnClickListener(this);
         bUploadImage.setOnClickListener(this);
-        bDownloadImage.setOnClickListener(this);
         userLocalStore = new UserLocalStore(this);
 
     }
@@ -112,10 +108,8 @@ public class ShareContent extends ActionBarActivity implements View.OnClickListe
                 User user = userLocalStore.getLoggedInUser();
                 Bitmap image = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
                 new UploadImage(image, etUploadImageName.getText().toString(), user.username).execute();
-                break;
-
-            case R.id.bDownloadImage:
-                new DownloadImage(etDownloadImageName.getText().toString()).execute();
+                Intent intent1 = new Intent(ShareContent.this, MyPage.class);
+                startActivity(intent1);
                 break;
         }
     }
@@ -155,35 +149,6 @@ public class ShareContent extends ActionBarActivity implements View.OnClickListe
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Toast.makeText(getApplicationContext(), "Image Uploaded", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private class DownloadImage extends AsyncTask<Void, Void, Bitmap>{
-        String name;
-        public DownloadImage(String name) {
-            this.name = name;
-        }
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-
-            String url = SERVER_ADDRESS + "pictures/" + name + ".JPG";
-            try {
-                URLConnection connection = new URL(url).openConnection();
-                connection.setConnectTimeout(1000 * 30);
-                connection.setReadTimeout(1000 * 30);
-                return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
-            }catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            if (bitmap != null) {
-                DownloadImage.setImageBitmap(bitmap);
-            }
         }
     }
 

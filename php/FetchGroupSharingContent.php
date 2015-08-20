@@ -2,20 +2,15 @@
 
 	$con=mysqli_connect("mysql4.000webhost.com", "a2635382_fitness", "woaiwo+0555", "a2635382_fitDB");
 
-	// for ($i = 0, $l = count($_POST['array1']); $i < $l; $i++) {
- //    	doStuff($_POST['array1'][$i]);
-	// }
-	//$followedName = $_POST['id'];
-	//$followedName = {vivi, nini, mengye}
-	$followedName = array();	
-	$followedName[0] = "vivi";
-	$followedName[1] = "nini";
-	$followedName[2] = "mengyye";
-	//$qryVals = implode(",",$followedName);
+	$followedName = $_POST["friendname"];
+	$offset = $_POST["offset"];
+	// $offset = 2;
+	// $followedName = array();	
+	// $followedName[2] = "vivi";
+	// $followedName[1] = "nini";
+	// $followedName[0] = "mengyye";
 
-	echo "SELECT * FROM shareContent WHERE owner IN ($followedName[0]) ORDER BY time DESC LIMIT 5";
-
-	$statement = mysqli_prepare($con, "SELECT * FROM shareContent WHERE owner IN ($followedName) ORDER BY time DESC LIMIT 5") or die(mysqli_error($con));
+	$statement = mysqli_prepare($con, "SELECT * FROM shareContent WHERE owner IN ('" . implode("','", $followedName) . "') ORDER BY time DESC LIMIT $offset, 5") or die(mysqli_error($con));
 	
 	mysqli_stmt_execute($statement);
 	mysqli_stmt_store_result($statement);
@@ -29,6 +24,7 @@
 		$content[feeling] = $feeling;
 		$content[picName] = $picName;
 		$content[time] = $time;
+		$content[owner] = $owner;
 
 		$contentAll[$i++] = $content;
 		

@@ -43,6 +43,7 @@ public class FollowHandle extends AppCompatActivity implements IXListViewListene
     int offset;    // the database offset for searching use content, it should + 5 every pull up refresh
     UserLocalStore userLocalStore;
     String username;
+    String userSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +62,10 @@ public class FollowHandle extends AppCompatActivity implements IXListViewListene
 
         userLocalStore = new UserLocalStore(this);
         username = userLocalStore.getLoggedInUser().username;
-
+        userSelected = intent.getStringExtra("userSelect");
         Log.d("username", username);
-        new DownloadPhoto(username, userImage).execute();
-        doSearchContents(username, contents, offset);
+        new DownloadPhoto(userSelected, userImage).execute();
+        doSearchContents(userSelected, contents, offset);
         myAdapter = new SearchContentAdapter(this, contents);
         lvFollowContent.setAdapter(myAdapter);
 
@@ -76,7 +77,7 @@ public class FollowHandle extends AppCompatActivity implements IXListViewListene
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                doSearchContents(username, contents, offset);
+                doSearchContents(userSelected, contents, offset);
                 myAdapter.refresh(contents);
                 onLoad();
             }

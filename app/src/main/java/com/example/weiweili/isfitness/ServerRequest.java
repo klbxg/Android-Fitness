@@ -71,12 +71,11 @@ public class ServerRequest {
         }
         return jObject;
     }
-    public JSONObject fetchGroupSharingInBackground(String username) {
+    public JSONObject fetchFriendsInBackground(String username) {
         progressDialog.show();
         JSONObject jObject;
         try {
-            Log.d("infetch",username);
-            jObject = new FetchGroupSharingAsyncTask(username).execute().get();
+            jObject = new FetchFriendsAsyncTask(username).execute().get();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -84,6 +83,17 @@ public class ServerRequest {
         return jObject;
     }
 
+    public JSONObject fetchFriendsContentInBackground(ArrayList<FollowedUser> followedUsers, int offset) {
+        progressDialog.show();
+        JSONObject jObject;
+        try {
+            jObject = new FetchFriendsContentAsyncTask(followedUsers, offset).execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return jObject;
+    }
     // Add follow in background
     public void addFollowInBackground(String username, String wantfollow, AddFollowCallBack callback) {
         progressDialog.show();
@@ -475,9 +485,9 @@ public class ServerRequest {
         }
     }
 
-    public class FetchGroupSharingAsyncTask extends AsyncTask<Void, Void, JSONObject> {
+    public class FetchFriendsAsyncTask extends AsyncTask<Void, Void, JSONObject> {
         private String username;
-        public FetchGroupSharingAsyncTask(String username) {
+        public FetchFriendsAsyncTask(String username) {
             this.username = username;
         }
 
@@ -511,6 +521,48 @@ public class ServerRequest {
                 return null;
             }
             return jObject;
+        }
+    }
+
+    public class FetchFriendsContentAsyncTask extends AsyncTask<Void, Void, JSONObject> {
+        private ArrayList<FollowedUser> followedUsers;
+        private String offset;
+        public FetchFriendsContentAsyncTask(ArrayList<FollowedUser> followedUsers, int offset) {
+            this.followedUsers = followedUsers;
+            this.offset = offset + "";
+        }
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            for (int i = 0; i < followedUsers.size(); i++) {
+                dataToSend.add(new BasicNameValuePair("friendname[]", followedUsers.get(i).username));
+            }
+            dataToSend.add(new BasicNameValuePair("offset", offset));
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchGroupSharingContent.php");
+            JSONObject jObject;
+
+            try{
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                HttpResponse httpResponse = client.execute(post);
+                HttpEntity entity = httpResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                jObject = new JSONObject(result);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+            progressDialog.dismiss();
         }
     }
 }

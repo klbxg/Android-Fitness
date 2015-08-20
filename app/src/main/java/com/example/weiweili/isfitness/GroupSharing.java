@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -32,11 +31,15 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
     XListView lvGroupSharing;
     ImageView ivFrinedPicture, ivFrPhoto, ivGroupSharingPhoto,ivGroupSharingHead;
     TextView tvFriendName, tvFriendFeeling;
+    GroupSharingAdapter myAdapter;
     private Handler mHandler;
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
     UserLocalStore userLocalStore;
     String username;
     int offset;
+
+    ArrayList<FollowedUser> followedUsers;
+    ArrayList<GroupUserContent> friendsContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,9 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
         tvFriendName = (TextView) findViewById(R.id.tvFriendName);
         tvFriendFeeling = (TextView) findViewById(R.id.tvFriendFeeling);
 
+        followedUsers = new ArrayList<>();
+        friendsContent = new ArrayList<>();
+
         offset = 0;
 
         userLocalStore = new UserLocalStore(this);
@@ -60,7 +66,9 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
 
         new DownloadPhoto(username, ivGroupSharingPhoto).execute();
         doSearchFriends(username);
-
+        doSearchFriendsContent(followedUsers, offset);
+        myAdapter = new GroupSharingAdapter(this, friendsContent);
+        lvGroupSharing.setAdapter(myAdapter);
     }
 
     private void onLoad() {
@@ -71,22 +79,40 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
 
     private void doSearchFriends(String username) {
         ServerRequest serverRequest = new ServerRequest(this);
-        Log.d("username", username);
-        JSONObject result = serverRequest.fetchGroupSharingInBackground(username);
-        Log.d("result", result.toString());
+        JSONObject result = serverRequest.fetchFriendsInBackground(username);
         try{
-            ArrayList<FollowedUser> followedUsers = new ArrayList<>();
             int length = result.getJSONArray("followedUser").length();
             for (int i = 0; i < length; i++) {
                 String temp = result.getJSONArray("followedUser").getString(i);
-                Log.d("followUser", temp);
 
                 followedUsers.add(new FollowedUser(temp));
             }
-
-            lvGroupSharing.setAdapter(new GroupSharingAdapter(this, followedUsers));
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void doSearchFriendsContent(ArrayList<FollowedUser> followedUsers, int offset) {
+        ServerRequest serverRequest = new ServerRequest(this);
+        JSONObject result = serverRequest.fetchFriendsContentInBackground(followedUsers, offset);
+        if (result == null) {
+
+        }
+        else {
+            try {
+                int length = result.getJSONArray("contents").length();
+                for (int i = 0; i < length; i++) {
+                    JSONObject content = result.getJSONArray("contents").getJSONObject(i);
+                    String feeling = content.getString("feeling");
+                    String picName = content.getString("picName");
+                    String time = content.getString("time");
+                    String username = content.getString("owner");
+
+                    friendsContent.add(new GroupUserContent(feeling, picName, time, username));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -97,7 +123,15 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
 
     @Override
     public void onLoadMore() {
-
+        offset += 5;
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doSearchFriendsContent(followedUsers, offset);
+                myAdapter.refresh(friendsContent);
+                onLoad();
+            }
+        }, 2000);
     }
 
     @Override
@@ -121,54 +155,26 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
 
         return super.onOptionsItemSelected(item);
     }
-    private class DownloadPhoto extends AsyncTask<Void, Void, Bitmap> {
-        String name;
-        ImageView user_image;
-
-        public DownloadPhoto(String name, ImageView user_image) {
-            this.name = name;
-            this.user_image = user_image;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-
-            String url = SERVER_ADDRESS + "photo/" + name + ".JPG";
-            Log.d("url", url);
-            try {
-                URLConnection connection = new URL(url).openConnection();
-                connection.setConnectTimeout(1000 * 30);
-                connection.setReadTimeout(1000 * 30);
-                return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            if (bitmap != null) {
-                user_image.setImageBitmap(bitmap);
-            }
-        }
-    }
-
 }
 
 class GroupSharingAdapter extends BaseAdapter {
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
     private LayoutInflater layoutInflater;
-    ArrayList<FollowedUser> userList;
+    ArrayList<GroupUserContent> friendsContent;
     int count;
     Context context;
 
-    public GroupSharingAdapter(Context context, ArrayList<FollowedUser> userList) {
+    public GroupSharingAdapter(Context context, ArrayList<GroupUserContent> friendsContent) {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.userList = userList;
+        this.friendsContent = friendsContent;
         this.context = context;
-        this.count = userList.size();
+        this.count = friendsContent.size();
+    }
+
+    public void refresh(ArrayList<GroupUserContent> friendsContent) {
+        this.friendsContent = friendsContent;
+        this.count = friendsContent.size();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -183,27 +189,70 @@ class GroupSharingAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return userList.get(position);
+        return friendsContent.get(position);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        FollowedUser followedUser = userList.get(position);
+        GroupContentViewHolder holder;
+        GroupUserContent userContent = friendsContent.get(position);
 
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.search_list_element, null);
-            holder = new ViewHolder();
-            holder.user_name = (TextView) convertView.findViewById(R.id.search_result_username);
-            holder.user_image = (ImageView) convertView.findViewById(R.id.search_result_userImage);
+            convertView = layoutInflater.inflate(R.layout.groupsharing_list_element, null);
+            holder = new GroupContentViewHolder();
+            holder.feeling = (TextView) convertView.findViewById(R.id.tvFriendFeeling);
+            holder.picture = (ImageView) convertView.findViewById(R.id.ivFrinedPicture);
+            holder.time = (TextView) convertView.findViewById(R.id.tvFriendName);
+            holder.photo = (ImageView) convertView.findViewById(R.id.ivFrPhoto);
             convertView.setTag(holder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (GroupContentViewHolder) convertView.getTag();
         }
 
-        holder.user_name.setText(followedUser.username);
-        new DownloadImage(followedUser.username, holder.user_image).execute();
-
+        holder.feeling.setText(userContent.feeling);
+        new DownloadPhoto(userContent.username, holder.photo).execute();
+        new DownloadImage(userContent.picName, holder.picture).execute();
+        String date = userContent.time.substring(5, 10);
+        String month = "";
+        switch (date.substring(0, 2)) {
+            case "01":
+                month = "Jan";
+                break;
+            case "02":
+                month = "Feb";
+                break;
+            case "03":
+                month = "Mar";
+                break;
+            case "04":
+                month = "Apr";
+                break;
+            case "05":
+                month = "May";
+                break;
+            case "06":
+                month = "Jun";
+                break;
+            case "07":
+                month = "Jul";
+                break;
+            case "08":
+                month = "Aug";
+                break;
+            case "09":
+                month = "Sep";
+                break;
+            case "10":
+                month = "Oct";
+                break;
+            case "11":
+                month = "Nov";
+                break;
+            case "12":
+                month = "Dec";
+                break;
+        }
+        holder.time.setText(userContent.username + "    " + month + "/" + date.substring(3));
         return convertView;
     }
 
@@ -219,7 +268,7 @@ class GroupSharingAdapter extends BaseAdapter {
         @Override
         protected Bitmap doInBackground(Void... params) {
 
-            String url = SERVER_ADDRESS + "photo/" + name + ".JPG";
+            String url = SERVER_ADDRESS + name;
             try {
                 URLConnection connection = new URL(url).openConnection();
                 connection.setConnectTimeout(1000 * 30);
@@ -245,5 +294,60 @@ class FollowedUser {
     String username;
     public FollowedUser(String username) {
         this.username = username;
+    }
+}
+
+class GroupContentViewHolder {
+    ImageView picture;
+    TextView feeling;
+    TextView time;
+    ImageView photo;
+}
+
+class GroupUserContent {
+    String feeling;
+    String picName;
+    String time;
+    String username;
+    public GroupUserContent(String feeling, String picName, String time, String username) {
+        this.feeling = feeling;
+        this.picName = picName;
+        this.time = time;
+        this.username = username;
+    }
+}
+
+class DownloadPhoto extends AsyncTask<Void, Void, Bitmap> {
+    private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
+    String name;
+    ImageView user_image;
+
+    public DownloadPhoto(String name, ImageView user_image) {
+        this.name = name;
+        this.user_image = user_image;
+    }
+
+    @Override
+    protected Bitmap doInBackground(Void... params) {
+
+        String url = SERVER_ADDRESS + "photo/" + name + ".JPG";
+        Log.d("url", url);
+        try {
+            URLConnection connection = new URL(url).openConnection();
+            connection.setConnectTimeout(1000 * 30);
+            connection.setReadTimeout(1000 * 30);
+            return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        super.onPostExecute(bitmap);
+        if (bitmap != null) {
+            user_image.setImageBitmap(bitmap);
+        }
     }
 }
