@@ -110,6 +110,7 @@ public class ShareContent extends ActionBarActivity implements View.OnClickListe
                 new UploadImage(image, etUploadImageName.getText().toString(), user.username).execute();
                 Intent intent1 = new Intent(ShareContent.this, MyPage.class);
                 startActivity(intent1);
+                finish();
                 break;
         }
     }

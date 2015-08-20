@@ -56,7 +56,7 @@
         </activity>
         <activity
             android:name=".ShareContent"
-            android:label="@string/title_activity_share_content" >
+            android:label="@string/title_activity_share_content">
         </activity>
         <activity
             android:name=".FollowHandle"

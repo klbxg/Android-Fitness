@@ -67,7 +67,7 @@ public class MyPage extends ActionBarActivity implements IXListViewListener {
     private void onLoad() {
         lvSearchMyContent.stopRefresh();
         lvSearchMyContent.stopLoadMore();
-        lvSearchMyContent.setRefreshTime("刚刚");
+        lvSearchMyContent.setRefreshTime("JUST NOW");
     }
 //    @Override
 //    protected void onStart() {

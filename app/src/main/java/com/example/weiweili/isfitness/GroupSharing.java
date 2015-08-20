@@ -37,6 +37,7 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
     UserLocalStore userLocalStore;
     String username;
     int offset;
+    Context context;
 
     ArrayList<FollowedUser> followedUsers;
     ArrayList<GroupUserContent> friendsContent;
@@ -47,7 +48,7 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
         setContentView(R.layout.activity_group_sharing);
         lvGroupSharing = (XListView) findViewById(R.id.lvGroupSharing);
         lvGroupSharing.setPullLoadEnable(true);
-        lvGroupSharing.setPullRefreshEnable(false);
+        lvGroupSharing.setPullRefreshEnable(true);
         lvGroupSharing.setXListViewListener(this);
         mHandler = new Handler();
         ivFrinedPicture = (ImageView) findViewById(R.id.ivFrinedPicture);
@@ -55,6 +56,8 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
         ivGroupSharingPhoto = (ImageView) findViewById(R.id.ivGroupSharingPhoto);
         tvFriendName = (TextView) findViewById(R.id.tvFriendName);
         tvFriendFeeling = (TextView) findViewById(R.id.tvFriendFeeling);
+
+        context = this;
 
         followedUsers = new ArrayList<>();
         friendsContent = new ArrayList<>();
@@ -74,7 +77,7 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
     private void onLoad() {
         lvGroupSharing.stopRefresh();
         lvGroupSharing.stopLoadMore();
-        lvGroupSharing.setRefreshTime("刚刚");
+        lvGroupSharing.setRefreshTime("JUST NOW");
     }
 
     private void doSearchFriends(String username) {
@@ -118,7 +121,17 @@ public class GroupSharing extends ActionBarActivity implements IXListViewListene
 
     @Override
     public void onRefresh() {
-
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                offset = 0;
+                friendsContent = new ArrayList<>();
+                doSearchFriendsContent(followedUsers, offset);
+                myAdapter = new GroupSharingAdapter(context, friendsContent);
+                lvGroupSharing.setAdapter(myAdapter);
+                onLoad();
+            }
+        }, 2000);
     }
 
     @Override

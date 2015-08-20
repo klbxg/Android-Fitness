@@ -44,6 +44,7 @@ public class FollowHandle extends AppCompatActivity implements IXListViewListene
     UserLocalStore userLocalStore;
     String username;
     String userSelected;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +55,12 @@ public class FollowHandle extends AppCompatActivity implements IXListViewListene
         addFriend = (ImageButton) findViewById(R.id.add_friend);
         lvFollowContent = (XListView) findViewById(R.id.lvFollowContent);
         lvFollowContent.setPullLoadEnable(true);
-        lvFollowContent.setPullRefreshEnable(false);
+        lvFollowContent.setPullRefreshEnable(true);
         lvFollowContent.setXListViewListener(this);
         offset = 0;
         mHandler = new Handler();
         intent = this.getIntent();
+        context = this;
 
         userLocalStore = new UserLocalStore(this);
         username = userLocalStore.getLoggedInUser().username;
@@ -86,13 +88,23 @@ public class FollowHandle extends AppCompatActivity implements IXListViewListene
 
     @Override
     public void onRefresh() {
-
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                offset = 0;
+                contents = new ArrayList<>();
+                doSearchContents(userSelected, contents, offset);
+                myAdapter = new SearchContentAdapter(context, contents);
+                lvFollowContent.setAdapter(myAdapter);
+                onLoad();
+            }
+        }, 2000);
     }
 
     private void onLoad() {
         lvFollowContent.stopRefresh();
         lvFollowContent.stopLoadMore();
-        lvFollowContent.setRefreshTime("刚刚");
+        lvFollowContent.setRefreshTime("JUST NOW");
     }
 
     private void doSearchContents(String username, ArrayList<UserContent> contents, int offset) {
