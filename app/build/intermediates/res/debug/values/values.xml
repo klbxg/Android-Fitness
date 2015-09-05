@@ -281,7 +281,7 @@ available. Please contact the developer for assistance.</string>
     <string name="decline">Decline</string>
     <!-- From: file:/Users/mengyegong/Documents/project/Android/Android-Fitness/app/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="distance_label">Distance(miles)</string>
+    <string name="distance_label">Distance(km)</string>
     <!-- From: file:/Users/mengyegong/Documents/project/Android/Android-Fitness/app/src/main/res/values/google_maps_api.xml -->
     <eat-comment/>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
@@ -295,9 +295,11 @@ available. Please contact the developer for assistance.</string>
     <string name="orginal_pace">--</string>
     <string name="orginal_speed">--</string>
     <string name="orginal_time">00:00:00</string>
-    <string name="pace_label">Pace(minutes/mile)</string>
+    <string name="pace_label">Pace(minutes/km)</string>
+    <string name="save_dialog_title">Save</string>
     <string name="search_hint">Search Friends</string>
-    <string name="speed_label">Speed(miles/hour)</string>
+    <string name="share_dialog_title">Share</string>
+    <string name="speed_label">Speed(km/hour)</string>
     <!-- From: file:/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.3.0/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="store_picture_message">"Allow Ad to store image in Picture gallery?"</string>

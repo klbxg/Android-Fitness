@@ -18,14 +18,16 @@
     <string name="xlistview_footer_hint_normal">Read More</string>
     <string name="xlistview_footer_hint_ready">Release To Load</string>
     <string name="title_activity_sport">Sport</string>
-    <string name="distance_label">Distance(miles)</string>
+    <string name="distance_label">Distance(km)</string>
     <string name="orginal_distance">0.00</string>
     <string name="time_label">Time</string>
     <string name="orginal_time">00:00:00</string>
-    <string name="pace_label">Pace(minutes/mile)</string>
+    <string name="pace_label">Pace(minutes/km)</string>
     <string name="orginal_pace">--</string>
     <string name="calory_label">Calory</string>
     <string name="orginal_calory">--</string>
-    <string name="speed_label">Speed(miles/hour)</string>
+    <string name="speed_label">Speed(km/hour)</string>
     <string name="orginal_speed">--</string>
+    <string name="save_dialog_title">Save</string>
+    <string name="share_dialog_title">Share</string>
 </resources>

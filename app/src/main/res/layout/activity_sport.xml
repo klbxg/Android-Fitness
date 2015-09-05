@@ -25,6 +25,24 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <Button
+            android:id="@+id/bResume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resume"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/bStartSport"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/bStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/bResume"
+            android:visibility="invisible"/>
+
         <TextView
             android:id="@+id/tDistance"
             android:layout_width="wrap_content"
