@@ -7,23 +7,23 @@
     tools:context="com.example.weiweili.isfitness.SharingActivity">
 
     <ImageView
-        android:id="@+id/ivActivityToUpload"
+        android:id="@+id/ivSportToUpload"
         android:layout_gravity="center_horizontal"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_above="@+id/etActivityUploadName"
+        android:layout_above="@+id/etSportUploadImageName"
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/etActivityUploadName"
+        android:id="@+id/etSportUploadImageName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bActivityUploadImage"
+        android:layout_above="@+id/bSportUploadImage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Button
-        android:id="@+id/bActivityUploadImage"
+        android:id="@+id/bSportUploadImage"
         android:text="POST NOW"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
