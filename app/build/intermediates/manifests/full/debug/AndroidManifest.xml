@@ -84,6 +84,10 @@
             android:name="com.example.weiweili.isfitness.Sport"
             android:label="@string/title_activity_sport" >
         </activity>
+        <activity
+            android:name="com.example.weiweili.isfitness.SharingActivity"
+            android:label="@string/title_activity_sharing" >
+        </activity>
     </application>
 
 </manifest>

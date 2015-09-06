@@ -95,7 +95,7 @@ public class Sport extends FragmentActivity
     String averageSpeed;
     String thisDistance;
     String thisTime;
-    Bitmap thisActivity;
+    Bitmap thisSport;
     UserLocalStore userLocalStore;
 
     long startTime = 0;
@@ -171,7 +171,6 @@ public class Sport extends FragmentActivity
         tSpeed = (TextView) findViewById(R.id.tSpeed);
         iPhoto = (ImageView) findViewById(R.id.iMyHead);
         tusername = (TextView) findViewById(R.id.username);
-        UserLocalStore userLocalStore;
         String username;
 
         userLocalStore = new UserLocalStore(this);
@@ -300,7 +299,6 @@ public class Sport extends FragmentActivity
                 averageSpeed = tSpeed.getText().toString();
                 thisDistance = tDistance.getText().toString();
                 thisTime = tTime.getText().toString();
-                //captureMapScreen();
                 bResume.setVisibility(View.INVISIBLE);
                 bStop.setVisibility(View.INVISIBLE);
                 bStartSport.setText("Start");
@@ -317,15 +315,11 @@ public class Sport extends FragmentActivity
                 mMap.moveCamera(cu);
                 mMap.animateCamera(cu);
 
-                View sportResult = findViewById(R.id.sportResult);
-                sportResult.setVisibility(View.VISIBLE);
-                captureMapScreen();
-                sportResult.setVisibility(View.INVISIBLE);
-
                 lastTime = 0;
                 distanceSum = 0;
                 lastLocation = null;
                 tTime.setText(String.format("%02d:%02d:%02d", 0, 0, 0));
+                captureMapScreen();
                 showDialog(SAVE_DIALOG_ID);
                 break;
         }
@@ -344,10 +338,13 @@ public class Sport extends FragmentActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(getApplicationContext(),
                                         "Save OK!", Toast.LENGTH_SHORT).show();
+                                View sportResult = findViewById(R.id.sportResult);
+                                sportResult.setVisibility(View.VISIBLE);
+                                sportResult.setVisibility(View.INVISIBLE);
                                 showDialog(SHARE_DIALOG_ID);
                                 User user = userLocalStore.getLoggedInUser();
-                                new UploadImage(thisActivity, user.username).execute();
-                                finish();
+                                new UploadImage(thisSport, user.username).execute();
+                                //finish();
                                 return;
                             }
                         });
@@ -502,12 +499,12 @@ public class Sport extends FragmentActivity
                     canvas.drawBitmap(snapshot, new Matrix(), null);
                     canvas.drawBitmap(backBitmap, 0, 0, null);
 
-                    FileOutputStream out = new FileOutputStream(
-                            Environment.getExternalStorageDirectory()
-                                    + "/MapScreenShot"
-                                    + System.currentTimeMillis() + ".png");
-
-                    bmOverlay.compress(Bitmap.CompressFormat.PNG, 90, out);
+//                    FileOutputStream out = new FileOutputStream(
+//                            Environment.getExternalStorageDirectory()
+//                                    + "/MapScreenShot"
+//                                    + System.currentTimeMillis() + ".png");
+                    thisSport = bmOverlay;
+                    //bmOverlay.compress(Bitmap.CompressFormat.PNG, 90, out);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -552,8 +549,8 @@ public class Sport extends FragmentActivity
     }
 
     private Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
-        int targetWidth = 200;
-        int targetHeight = 200;
+        int targetWidth = 100;
+        int targetHeight = 70;
         Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
                 targetHeight,Bitmap.Config.ARGB_8888);
 
