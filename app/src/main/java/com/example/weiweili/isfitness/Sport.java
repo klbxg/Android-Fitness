@@ -2,11 +2,16 @@ package com.example.weiweili.isfitness;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,8 +37,18 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
@@ -44,6 +59,7 @@ public class Sport extends FragmentActivity
 
     private static final int SAVE_DIALOG_ID = 0;
     private static final int SHARE_DIALOG_ID = 1;
+    private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
 
     ArrayList<LatLng> allLatLng = new ArrayList<>();
 
@@ -63,6 +79,11 @@ public class Sport extends FragmentActivity
     TextView tCalory;
     TextView tPace;
     TextView tSpeed;
+    String averageSpeed;
+    String thisDistance;
+    String thisTime;
+    Bitmap thisActivity;
+    UserLocalStore userLocalStore;
 
     long startTime = 0;
     long lastTime = 0;
@@ -135,6 +156,7 @@ public class Sport extends FragmentActivity
         tCalory = (TextView) findViewById(R.id.tCalory);
         tPace = (TextView) findViewById(R.id.tPace);
         tSpeed = (TextView) findViewById(R.id.tSpeed);
+        userLocalStore = new UserLocalStore(this);
 
         distanceSum = 0;
         mListener = new LocationListener() {
@@ -244,6 +266,9 @@ public class Sport extends FragmentActivity
                 break;
 
             case R.id.bStop:
+                averageSpeed = tSpeed.getText().toString();
+                thisDistance = tDistance.getText().toString();
+                thisTime = tTime.getText().toString();
                 captureMapScreen();
                 bResume.setVisibility(View.INVISIBLE);
                 bStop.setVisibility(View.INVISIBLE);
@@ -284,6 +309,9 @@ public class Sport extends FragmentActivity
                                 Toast.makeText(getApplicationContext(),
                                         "Save OK!", Toast.LENGTH_SHORT).show();
                                 showDialog(SHARE_DIALOG_ID);
+                                User user = userLocalStore.getLoggedInUser();
+                                new UploadImage(thisActivity, user.username).execute();
+                                finish();
                                 return;
                             }
                         });
@@ -328,6 +356,52 @@ public class Sport extends FragmentActivity
             default:
                 return null;
         }
+    }
+
+    private class UploadImage extends AsyncTask<Void, Void, Void> {
+        Bitmap image;
+        String username;
+        public UploadImage(Bitmap image, String username) {
+            this.image = image;
+            this.username = username;
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("activity", encodedImage));
+            dataToSend.add(new BasicNameValuePair("username", username));
+            dataToSend.add(new BasicNameValuePair("distance", thisDistance));
+            dataToSend.add(new BasicNameValuePair("speed", averageSpeed));
+            dataToSend.add(new BasicNameValuePair("time", thisTime));
+
+            HttpParams httpRequestParams = getHttpRequestParams();
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "SaveActivity.php");
+
+            try {
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                client.execute(post);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(getApplicationContext(), "Activity Uploaded", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private HttpParams getHttpRequestParams() {
+        HttpParams httpRequestParams = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(httpRequestParams, 1000 * 30);
+        HttpConnectionParams.setSoTimeout(httpRequestParams, 1000 * 30);
+        return httpRequestParams;
     }
 
     private void setUpMapIfNeeded() {

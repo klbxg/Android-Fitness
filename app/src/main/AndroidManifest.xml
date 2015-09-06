@@ -14,6 +14,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -76,6 +77,10 @@
         <activity
             android:name=".Sport"
             android:label="@string/title_activity_sport" >
+        </activity>
+        <activity
+            android:name=".SharingActivity"
+            android:label="@string/title_activity_sharing" >
         </activity>
     </application>
 

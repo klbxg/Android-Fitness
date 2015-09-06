@@ -30,4 +30,5 @@
     <string name="orginal_speed">--</string>
     <string name="save_dialog_title">Save</string>
     <string name="share_dialog_title">Share</string>
+    <string name="title_activity_sharing">SharingActivity</string>
 </resources>
