@@ -530,7 +530,6 @@ int id adjust_height 0x7f0e0017
 int id adjust_width 0x7f0e0018
 int id alertTitle 0x7f0e0045
 int id always 0x7f0e001c
-int id bActivityUploadImage 0x7f0e0089
 int id bGroupSharing 0x7f0e007a
 int id bLogin 0x7f0e006e
 int id bLogout 0x7f0e0077
@@ -540,6 +539,7 @@ int id bResume 0x7f0e008b
 int id bSearchUser 0x7f0e0070
 int id bShareContent 0x7f0e0078
 int id bSport 0x7f0e007b
+int id bSportUploadImage 0x7f0e0089
 int id bStartSport 0x7f0e008a
 int id bStop 0x7f0e008c
 int id bUploadImage 0x7f0e0086
@@ -563,13 +563,13 @@ int id donate_with_google 0x7f0e0034
 int id dropdown 0x7f0e0022
 int id edit_query 0x7f0e0057
 int id end 0x7f0e0015
-int id etActivityUploadName 0x7f0e0088
 int id etAge 0x7f0e007f
 int id etEmail 0x7f0e0076
 int id etName 0x7f0e0074
 int id etPassword 0x7f0e006d
 int id etPassword1 0x7f0e0080
 int id etPassword2 0x7f0e0081
+int id etSportUploadImageName 0x7f0e0088
 int id etUploadName 0x7f0e0085
 int id etUsername 0x7f0e006c
 int id expand_activities_button 0x7f0e003c
@@ -585,7 +585,6 @@ int id icon 0x7f0e0040
 int id ifRoom 0x7f0e001e
 int id image 0x7f0e003d
 int id imageToUpload 0x7f0e0084
-int id ivActivityToUpload 0x7f0e0087
 int id ivFollowHead 0x7f0e0064
 int id ivFollowPicture 0x7f0e009f
 int id ivFrPhoto 0x7f0e00a1
@@ -595,6 +594,7 @@ int id ivGroupSharingPhoto 0x7f0e006b
 int id ivMyPageHead 0x7f0e007d
 int id ivPhoto 0x7f0e0071
 int id ivPicture 0x7f0e00a6
+int id ivSportToUpload 0x7f0e0087
 int id ivphoto 0x7f0e007e
 int id listMode 0x7f0e0009
 int id list_item 0x7f0e003f

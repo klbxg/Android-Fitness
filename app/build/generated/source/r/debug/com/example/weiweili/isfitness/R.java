@@ -1941,7 +1941,6 @@ containing a value of this type.
         public static final int adjust_width=0x7f0e0018;
         public static final int alertTitle=0x7f0e0045;
         public static final int always=0x7f0e001c;
-        public static final int bActivityUploadImage=0x7f0e0089;
         public static final int bGroupSharing=0x7f0e007a;
         public static final int bLogin=0x7f0e006e;
         public static final int bLogout=0x7f0e0077;
@@ -1951,6 +1950,7 @@ containing a value of this type.
         public static final int bSearchUser=0x7f0e0070;
         public static final int bShareContent=0x7f0e0078;
         public static final int bSport=0x7f0e007b;
+        public static final int bSportUploadImage=0x7f0e0089;
         public static final int bStartSport=0x7f0e008a;
         public static final int bStop=0x7f0e008c;
         public static final int bUploadImage=0x7f0e0086;
@@ -1974,13 +1974,13 @@ containing a value of this type.
         public static final int dropdown=0x7f0e0022;
         public static final int edit_query=0x7f0e0057;
         public static final int end=0x7f0e0015;
-        public static final int etActivityUploadName=0x7f0e0088;
         public static final int etAge=0x7f0e007f;
         public static final int etEmail=0x7f0e0076;
         public static final int etName=0x7f0e0074;
         public static final int etPassword=0x7f0e006d;
         public static final int etPassword1=0x7f0e0080;
         public static final int etPassword2=0x7f0e0081;
+        public static final int etSportUploadImageName=0x7f0e0088;
         public static final int etUploadName=0x7f0e0085;
         public static final int etUsername=0x7f0e006c;
         public static final int expand_activities_button=0x7f0e003c;
@@ -1996,7 +1996,6 @@ containing a value of this type.
         public static final int ifRoom=0x7f0e001e;
         public static final int image=0x7f0e003d;
         public static final int imageToUpload=0x7f0e0084;
-        public static final int ivActivityToUpload=0x7f0e0087;
         public static final int ivFollowHead=0x7f0e0064;
         public static final int ivFollowPicture=0x7f0e009f;
         public static final int ivFrPhoto=0x7f0e00a1;
@@ -2006,6 +2005,7 @@ containing a value of this type.
         public static final int ivMyPageHead=0x7f0e007d;
         public static final int ivPhoto=0x7f0e0071;
         public static final int ivPicture=0x7f0e00a6;
+        public static final int ivSportToUpload=0x7f0e0087;
         public static final int ivphoto=0x7f0e007e;
         public static final int listMode=0x7f0e0009;
         public static final int list_item=0x7f0e003f;

@@ -44,11 +44,11 @@ public class SharingActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sharing);
 
-        etSportUploadImageName = (EditText) findViewById(R.id.etUploadName);
+        etSportUploadImageName = (EditText) findViewById(R.id.etSportUploadImageName);
 
-        ivSportToUpload = (ImageView) findViewById(R.id.imageToUpload);
+        ivSportToUpload = (ImageView) findViewById(R.id.ivSportToUpload);
 
-        bSportUploadImage = (Button) findViewById(R.id.bUploadImage);
+        bSportUploadImage = (Button) findViewById(R.id.bSportUploadImage);
 
         bSportUploadImage.setOnClickListener(this);
         userLocalStore = new UserLocalStore(this);
@@ -82,7 +82,7 @@ public class SharingActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.bActivityUploadImage:
+            case R.id.bSportUploadImage:
                 User user = userLocalStore.getLoggedInUser();
                 Bitmap image = ((BitmapDrawable) ivSportToUpload.getDrawable()).getBitmap();
                 new UploadImage(image, etSportUploadImageName.getText().toString(), user.username).execute();
