@@ -69,7 +69,6 @@ public class Sport extends FragmentActivity
 
     private static final int SAVE_DIALOG_ID = 0;
     private static final int SHARE_DIALOG_ID = 1;
-    //private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
     ImageView iPhoto;
     TextView tusername;
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
@@ -372,7 +371,9 @@ public class Sport extends FragmentActivity
                                 Toast.makeText(getApplicationContext(),
                                         "Share OK!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Sport.this, SharingActivity.class);
-                                intent.putExtra("sportResult", thisSport);
+                                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                                thisSport.compress(Bitmap.CompressFormat.PNG, 50, bs);
+                                intent.putExtra("sportResult", bs.toByteArray());
                                 startActivity(intent);
                                 return;
                             }

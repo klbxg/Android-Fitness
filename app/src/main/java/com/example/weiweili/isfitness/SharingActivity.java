@@ -3,6 +3,7 @@ package com.example.weiweili.isfitness;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -53,8 +54,9 @@ public class SharingActivity extends AppCompatActivity implements View.OnClickLi
         bSportUploadImage.setOnClickListener(this);
         userLocalStore = new UserLocalStore(this);
         Intent intent = this.getIntent();
-        Bitmap bitmap = intent.getParcelableExtra("sportResult");
-        ivSportToUpload.setImageBitmap(bitmap);
+        Bitmap b = BitmapFactory.decodeByteArray(
+                intent.getByteArrayExtra("sportResult"), 0, intent.getByteArrayExtra("sportResult").length);
+        ivSportToUpload.setImageBitmap(b);
     }
 
     @Override
