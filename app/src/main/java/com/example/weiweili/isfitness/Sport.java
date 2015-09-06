@@ -319,7 +319,10 @@ public class Sport extends FragmentActivity
                 distanceSum = 0;
                 lastLocation = null;
                 tTime.setText(String.format("%02d:%02d:%02d", 0, 0, 0));
+                View sportResult = findViewById(R.id.sportResult);
+                sportResult.setVisibility(View.VISIBLE);
                 captureMapScreen();
+                sportResult.setVisibility(View.INVISIBLE);
                 showDialog(SAVE_DIALOG_ID);
                 break;
         }
@@ -338,9 +341,6 @@ public class Sport extends FragmentActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(getApplicationContext(),
                                         "Save OK!", Toast.LENGTH_SHORT).show();
-                                View sportResult = findViewById(R.id.sportResult);
-                                sportResult.setVisibility(View.VISIBLE);
-                                sportResult.setVisibility(View.INVISIBLE);
                                 showDialog(SHARE_DIALOG_ID);
                                 User user = userLocalStore.getLoggedInUser();
                                 new UploadImage(thisSport, user.username).execute();
@@ -371,6 +371,9 @@ public class Sport extends FragmentActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(getApplicationContext(),
                                         "Share OK!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Sport.this, SharingActivity.class);
+                                intent.putExtra("sportResult", thisSport);
+                                startActivity(intent);
                                 return;
                             }
                         });
