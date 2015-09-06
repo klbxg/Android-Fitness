@@ -3,13 +3,20 @@ package com.example.weiweili.isfitness;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
@@ -35,6 +42,9 @@ import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback;
 import org.w3c.dom.Text;
 
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class Sport extends FragmentActivity
@@ -44,6 +54,9 @@ public class Sport extends FragmentActivity
 
     private static final int SAVE_DIALOG_ID = 0;
     private static final int SHARE_DIALOG_ID = 1;
+    private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
+    ImageView iPhoto;
+    TextView tusername;
 
     ArrayList<LatLng> allLatLng = new ArrayList<>();
 
@@ -91,8 +104,7 @@ public class Sport extends FragmentActivity
     @Override
     public void onConnected(Bundle bundle) {
         Toast.makeText(this, "Ready to map!", Toast.LENGTH_SHORT).show();
-        Location currentLocation = LocationServices.FusedLocationApi
-                .getLastLocation(mLocationClient);
+        Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
 
         if (currentLocation == null) {
             Toast.makeText(this, "Couldn't connect!", Toast.LENGTH_SHORT).show();
@@ -101,8 +113,8 @@ public class Sport extends FragmentActivity
                     currentLocation.getLatitude(),
                     currentLocation.getLongitude()
             );
-            lastLatLng = latLng;
-            allLatLng.add(lastLatLng);
+            //lastLatLng = latLng;
+            //allLatLng.add(lastLatLng);
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(
                     latLng, 18
             );
@@ -124,6 +136,7 @@ public class Sport extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sport);
+
         bStartSport = (Button) findViewById(R.id.bStartSport);
         bStartSport.setOnClickListener(this);
         bResume = (Button) findViewById(R.id.bResume);
@@ -135,6 +148,16 @@ public class Sport extends FragmentActivity
         tCalory = (TextView) findViewById(R.id.tCalory);
         tPace = (TextView) findViewById(R.id.tPace);
         tSpeed = (TextView) findViewById(R.id.tSpeed);
+        iPhoto = (ImageView) findViewById(R.id.iMyHead);
+        tusername = (TextView) findViewById(R.id.username);
+        UserLocalStore userLocalStore;
+        String username;
+
+        userLocalStore = new UserLocalStore(this);
+        username = userLocalStore.getLoggedInUser().username;
+        tusername.setText(username);
+        new DownloadPhoto(username, iPhoto).execute();
+        iPhoto.setAlpha(0x99);
 
         distanceSum = 0;
         mListener = new LocationListener() {
@@ -143,13 +166,15 @@ public class Sport extends FragmentActivity
                 //Toast.makeText(Sport.this, "Location changed: " + location.getLatitude() + ", " + location.getLongitude(), Toast.LENGTH_SHORT).show();
                 gotoLocation(location.getLatitude(), location.getLongitude(), 18);
                 LatLng curLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                drawLine(curLatLng);
+                if (lastLatLng != null) {
+                    drawLine(curLatLng);
+                }
                 lastLatLng = curLatLng;
                 allLatLng.add(lastLatLng);
                 if (lastLocation != null) {
                     Location.distanceBetween(lastLocation.getLatitude(), lastLocation.getLongitude(), location.getLatitude(), location.getLongitude(), distance);
                     distanceSum += distance[0] / 1000;
-                    tDistance.setText(String.format("%.02f", distanceSum));
+                    tDistance.setText(String.format("%.02f", distanceSum) + "km");
                     if (timeTotal != 0) {
                         tSpeed.setText(String.format("%.02f", distanceSum / timeTotal));
                     }
@@ -206,6 +231,7 @@ public class Sport extends FragmentActivity
                     bResume.setVisibility(View.INVISIBLE);
                     bStop.setVisibility(View.INVISIBLE);
                     lastTime = 0;
+                    lastLatLng = null;
 
                     LocationRequest request = LocationRequest.create();
                     request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -232,6 +258,7 @@ public class Sport extends FragmentActivity
                 bStartSport.setText("Pause");
 
                 lastLocation = null;
+                lastLatLng = null;
 
                 LocationRequest request = LocationRequest.create();
                 request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -244,7 +271,11 @@ public class Sport extends FragmentActivity
                 break;
 
             case R.id.bStop:
-                captureMapScreen();
+                TextView distance = (TextView) findViewById(R.id.tDistanceResult);
+                TextView speed = (TextView) findViewById(R.id.tSpeedResult);
+                distance.setText("Distance: " + tDistance.getText().toString());
+                speed.setText("Speed: " + tSpeed.getText().toString() + "km/h");
+
                 bResume.setVisibility(View.INVISIBLE);
                 bStop.setVisibility(View.INVISIBLE);
                 bStartSport.setText("Start");
@@ -260,6 +291,11 @@ public class Sport extends FragmentActivity
                         padding);
                 mMap.moveCamera(cu);
                 mMap.animateCamera(cu);
+
+                View sportResult = findViewById(R.id.sportResult);
+                sportResult.setVisibility(View.VISIBLE);
+                captureMapScreen();
+                sportResult.setVisibility(View.INVISIBLE);
 
                 lastTime = 0;
                 distanceSum = 0;
@@ -343,45 +379,6 @@ public class Sport extends FragmentActivity
         }
     }
 
-    private void drawLine(LatLng latlng) {
-        PolylineOptions lineOptions = new PolylineOptions()
-                .add(latlng)
-                .add(lastLatLng)
-                .color(Color.GREEN);
-        line = mMap.addPolyline(lineOptions);
-    }
-
-    public void captureMapScreen() {
-        SnapshotReadyCallback callback = new SnapshotReadyCallback() {
-
-            @Override
-            public void onSnapshotReady(Bitmap snapshot) {
-                try {
-//                    mView.setDrawingCacheEnabled(true);
-//                    Bitmap backBitmap = mView.getDrawingCache();
-//                    Bitmap bmOverlay = Bitmap.createBitmap(
-//                            backBitmap.getWidth(), backBitmap.getHeight(),
-//                            backBitmap.getConfig());
-//                    Canvas canvas = new Canvas(bmOverlay);
-//                    canvas.drawBitmap(snapshot, new Matrix(), null);
-//                    canvas.drawBitmap(backBitmap, 0, 0, null);
-                    FileOutputStream out = new FileOutputStream(
-                            Environment.getExternalStorageDirectory()
-                                    + "/MapScreenShot"
-                                    + System.currentTimeMillis() + ".png");
-
-                    snapshot.compress(Bitmap.CompressFormat.PNG, 90, out);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        mMap.snapshot(callback);
-
-
-    }
-
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
      * just add a marker near Africa.
@@ -397,12 +394,109 @@ public class Sport extends FragmentActivity
 
         mLocationClient.connect();
         mMap.setMyLocationEnabled(true);
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(40.760167, -73.979988)).title("Marker"));
     }
 
     private void gotoLocation(double lat, double lng, float zoom) {
         LatLng latLng = new LatLng(lat, lng);
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng, zoom);
         mMap.moveCamera(update);
+    }
+
+    private void drawLine(LatLng latlng) {
+        PolylineOptions lineOptions = new PolylineOptions()
+                .add(latlng)
+                .add(lastLatLng)
+                .color(Color.GREEN);
+        line = mMap.addPolyline(lineOptions);
+    }
+
+    public void captureMapScreen() {
+        SnapshotReadyCallback callback = new SnapshotReadyCallback() {
+
+            @Override
+            public void onSnapshotReady(Bitmap snapshot) {
+                try {
+                    View sportResult = findViewById(R.id.sportResult);
+                    sportResult.setDrawingCacheEnabled(true);
+
+                    Bitmap backBitmap = sportResult.getDrawingCache();
+
+                    Bitmap bmOverlay = Bitmap.createBitmap(
+                            snapshot.getWidth(), snapshot.getHeight(),
+                            snapshot.getConfig());
+                    Canvas canvas = new Canvas(bmOverlay);
+                    canvas.drawBitmap(snapshot, new Matrix(), null);
+                    canvas.drawBitmap(backBitmap, 0, 0, null);
+
+                    FileOutputStream out = new FileOutputStream(
+                            Environment.getExternalStorageDirectory()
+                                    + "/MapScreenShot"
+                                    + System.currentTimeMillis() + ".png");
+
+                    bmOverlay.compress(Bitmap.CompressFormat.PNG, 90, out);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        mMap.snapshot(callback);
+    }
+
+    private class DownloadPhoto extends AsyncTask<Void, Void, Bitmap> {
+        String name;
+        ImageView user_image;
+
+        public DownloadPhoto(String name, ImageView user_image) {
+            this.name = name;
+            this.user_image = user_image;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+
+            String url = SERVER_ADDRESS + "photo/" + name + ".JPG";
+            Log.d("url", url);
+            try {
+                URLConnection connection = new URL(url).openConnection();
+                connection.setConnectTimeout(1000 * 30);
+                connection.setReadTimeout(1000 * 30);
+                return BitmapFactory.decodeStream((InputStream) connection.getContent(), null, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            if (bitmap != null) {
+                user_image.setImageBitmap(getRoundedShape(bitmap));
+            }
+        }
+    }
+
+    private Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
+        int targetWidth = 200;
+        int targetHeight = 200;
+        Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
+                targetHeight,Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(targetBitmap);
+        Path path = new Path();
+        path.addCircle(((float) targetWidth - 1) / 2,
+                ((float) targetHeight - 1) / 2,
+                (Math.min(((float) targetWidth),
+                        ((float) targetHeight)) / 2),
+                Path.Direction.CCW);
+
+        canvas.clipPath(path);
+        Bitmap sourceBitmap = scaleBitmapImage;
+        canvas.drawBitmap(sourceBitmap,
+                new Rect(0, 0, sourceBitmap.getWidth(),
+                        sourceBitmap.getHeight()),
+                new Rect(0, 0, targetWidth, targetHeight), null);
+        return targetBitmap;
     }
 }

@@ -277,6 +277,7 @@ class SearchContentAdapter extends BaseAdapter {
         holder.time.setText(month + "/" + date.substring(3));
         return convertView;
     }
+
     private class DownloadImage extends AsyncTask<Void, Void, Bitmap> {
         String name;
         ImageView user_image;
