@@ -9,7 +9,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="180dp"
         android:id="@+id/ivFollowHead"
         android:src="@drawable/groupsharing_head"
         android:scaleType="fitXY" />
@@ -28,13 +28,13 @@
         android:id="@+id/user_selected_name"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#000000"
         android:text="sfjladjfladjf"
         android:textSize="18dp"
         android:layout_alignBottom="@+id/user_selected_image"
-        android:layout_toEndOf="@+id/user_selected_image" />
+        android:layout_toRightOf="@+id/user_selected_image"
+        android:layout_marginLeft="5dp"/>
 
     <ImageButton
         android:id="@+id/add_friend"
@@ -47,7 +47,7 @@
         android:background="@drawable/add_friend"
         style="?android:attr/borderlessButtonStyle"
         android:layout_alignBottom="@+id/user_selected_image"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         />
 
     <com.example.weiweili.isfitness.XListView

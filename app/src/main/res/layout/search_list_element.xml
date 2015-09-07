@@ -26,17 +26,4 @@
         android:layout_toRightOf="@+id/search_result_userImage"
         android:layout_marginLeft="20dp"/>
 
-    <!--<ImageButton-->
-        <!--android:id="@+id/add_friend"-->
-        <!--android:layout_width="90dp"-->
-        <!--android:layout_height="35dp"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginRight ="10dp"-->
-        <!--android:scaleType="fitXY"-->
-        <!--android:layout_weight="1"-->
-        <!--android:adjustViewBounds="true"-->
-        <!--android:background="@drawable/add_friend"-->
-        <!--style="?android:attr/borderlessButtonStyle" />-->
-
 </RelativeLayout>

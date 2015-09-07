@@ -21,7 +21,6 @@
         android:layout_below="@+id/tvFeeling"
         android:layout_toRightOf="@+id/tvTime"
         android:layout_marginLeft="50dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"/>
 
     <TextView
