@@ -7,14 +7,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.Rect;
-import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -35,7 +31,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.LocationServices;
 import android.location.Location;
 import com.google.android.gms.maps.CameraUpdate;
@@ -53,10 +48,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -106,9 +99,7 @@ public class Sport extends FragmentActivity
         @Override
         public void run() {
             long millis = System.currentTimeMillis() - startTime + lastTime;
-            //Log.d("millis", Long.toString(millis));
             timeTotal = millis / (1000.0 * 60.0 * 60.0);
-            //Log.d("time", Double.toString(timeTotal));
             int seconds = (int) (millis / 1000);
             int minutes = seconds / 60;
             seconds = seconds % 60;
@@ -133,8 +124,6 @@ public class Sport extends FragmentActivity
                     currentLocation.getLatitude(),
                     currentLocation.getLongitude()
             );
-            //lastLatLng = latLng;
-            //allLatLng.add(lastLatLng);
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(
                     latLng, 18
             );
@@ -217,7 +206,6 @@ public class Sport extends FragmentActivity
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
-        //Toast.makeText(this,"resumed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -303,16 +291,17 @@ public class Sport extends FragmentActivity
                 bStartSport.setText("Start");
                 // Adjust the map to show all the lines
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                for (LatLng location : allLatLng) {
-                    builder.include(location);
+                if (allLatLng.size() != 0) {
+                    for (LatLng location : allLatLng) {
+                        builder.include(location);
+                    }
+                    LatLngBounds bounds = builder.build();
+                    int padding = 20; // offset from edges of the map in pixels
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
+                            padding);
+                    mMap.moveCamera(cu);
+                    mMap.animateCamera(cu);
                 }
-
-                LatLngBounds bounds = builder.build();
-                int padding = 20; // offset from edges of the map in pixels
-                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
-                        padding);
-                mMap.moveCamera(cu);
-                mMap.animateCamera(cu);
 
                 lastTime = 0;
                 distanceSum = 0;
@@ -343,7 +332,6 @@ public class Sport extends FragmentActivity
                                 showDialog(SHARE_DIALOG_ID);
                                 User user = userLocalStore.getLoggedInUser();
                                 new UploadImage(thisSport, user.username).execute();
-                                //finish();
                                 return;
                             }
                         });

@@ -2,172 +2,172 @@
 <items version="2" >
 
     <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.3.0/jars/classes.jar"
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.3.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="b48d5c51a9a9e329005106b4667f54948de4d4d8">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-140087e3a6ce5be1a181fec624d8b916ccbf75e2.jar" />
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-791ad33fc2d65fbc017769d15ecd2015c4ae1e24.jar" />
     </item>
     <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6046e5cdaf799120b7c56a5a061d80e8854c4d34">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-4baabfa0aaf11044486933b7d1bbba72a4516fd6.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="9c9dea9e85aceb09d95df5e6f7bc8a43fc286068">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-8924d3d8b93af105185a85485e4e52ee09848211.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="0180d031a7b54dabb93b4af3869468b55dc938bd">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-b21fb920c369f52701637dcd7092f1ec69fc8692.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="5ea948d825957be6c4358c48422bee60eef2d487">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-3066445aecfab6b23cb32d67bb43a7dadb0f9280.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b2c07cdb814fe988ad05f7b4d767a841514a5991">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-a10102f661569db19994d7bb4fbbfb62a4691c66.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="59652857a825fff0de62166fca1bc9553cc01abb">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-e2288c62822694b8b6ad537d052389bb63e78002.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e5bf453b070c1e39297986144960e45afa0fdfad">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-596385c9457e371cca9847b13898ea6d9f598892.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a0ce76dfaccbfbd6c551ed2174280aaabe60fe47">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-3cf011e1b630250601a1abb6f75b0eac2a8e0d82.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-c62a3b794e3282154e7ee7cf4e3eb9574b48cddb.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-357d5dc9d8730237db4671969289887f12845fa3.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="3b4ff5c39dace8f3b4ab4cab8191785547a0815f">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-ac89872384d09a6adb58e1909b407f1eda1326c1.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e5b9f5b0aa8dee788beb63d23832cb29ce771343">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-5698f8e14d0d6e12ae5d1dc14281a93d8cab9d4a.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="0708ef60917bf94913fe9ef972a655b99462dca7">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-7bf94085ba04d1a30dd3505fed5163685d7dce1b.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="bb36004beb02b69562cbec9aa7d6a3cf16bf5d1b">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-eb1fe519205cedb6eddb877ec1c8c3809fad89ee.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="565a01f90f1529f73362707c4c185d0623a68782">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-db0d46fa8f28f87c7d1679b366c09919c0bc3c33.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-237a89e682c25529ef04b2bbedca2f674046deda.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="fe3e0c6de7cceed888b277487238b6af9a1cc299">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-ed07382e1ba3ce2a8eafaa5da869057022963ef4.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4f4fe3c23776540625f3c2844152a7510fddf9f1">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-0244400eef217794ea7d557aa7059adeca6ae4e2.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.3.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="e35fae1b377c23aa5fd2d309a190c2d0f73d54ec">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-fbea9431de88585414f85885f886d6095f70b2ad.jar" />
-    </item>
-    <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.3.0/jars/classes.jar"
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.3.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="3988694bf9d8186ff97ad5cdfa4ed88b5010fe08">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-d471a05d40458cacd27328a2444ddcd8afe2be85.jar" />
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-8b990986d86e9f1f7725b5d785ff9c9fb1651571.jar" />
     </item>
     <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.3.0/jars/classes.jar"
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-5877a78ef6017ed5657c32b7f3515788dd0027bd.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0180d031a7b54dabb93b4af3869468b55dc938bd">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-b869e93ac531ab48c798005e065e63ffcaf9d967.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0708ef60917bf94913fe9ef972a655b99462dca7">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-b5fb83c9921b729829cb371e0f4ddf9ad8af404e.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.3.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="7215ac1f2fca947b9415a6ee2a1bf991364aab24">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-0d08ce8f0f006b4d0f7ea2e48806cfe108e6374a.jar" />
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-a1581ed68ab1f20e91f57155c3e84234fa717164.jar" />
     </item>
     <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="565a01f90f1529f73362707c4c185d0623a68782">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-1d6b430b8c9c47e4bdf1d4036310a4fbb469fa68.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b2c07cdb814fe988ad05f7b4d767a841514a5991">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-574d765151ab57576500befc230fe64c8267fad6.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="5ea948d825957be6c4358c48422bee60eef2d487">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-00c7b9787980c98186b73f29a87850b8716639db.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e35fae1b377c23aa5fd2d309a190c2d0f73d54ec">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-f72d7dfd99594a274d612ce75e321db0775f16c1.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e5bf453b070c1e39297986144960e45afa0fdfad">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-a76b2c1ec0560aa66479f3c02c8e1d2f1698ba31.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fe3e0c6de7cceed888b277487238b6af9a1cc299">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-5eb5f37edd41fe58d034bfb5c549f2bd74f02aa1.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a0ce76dfaccbfbd6c551ed2174280aaabe60fe47">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-ea45ddc96a1d053431123af44a8fd4c010dc0a89.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-deeb8986eb265613e2716e162d07d052f9a0a70d.jar" />
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-b67f4c31631605149af0e77d7dc772d2ccb2b1c3.jar" />
     </item>
     <item
-        jar="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.3.0/jars/classes.jar"
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9c9dea9e85aceb09d95df5e6f7bc8a43fc286068">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-b84fb29d7d9b31f8cd679ecefb02f050fce025e5.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="59652857a825fff0de62166fca1bc9553cc01abb">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-f674253df62e93491707f9e7bbb2c886d008b1bb.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e5b9f5b0aa8dee788beb63d23832cb29ce771343">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-3680d59a30836424b64ce2cb07f1f974fd3f0bc6.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-f7422f0a2e1292a7e865621bd807fb00d9ee7432.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="bb36004beb02b69562cbec9aa7d6a3cf16bf5d1b">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-3a6b688b0c855100b196ddc1698de38c39525570.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-ac57a9b606600d13c5e400ce68c8c7c2a9899acb.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6046e5cdaf799120b7c56a5a061d80e8854c4d34">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-671ad636ac1e9607883445951d9787cd411d321c.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3b4ff5c39dace8f3b4ab4cab8191785547a0815f">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-7969aaf2053891fef75aee5a1e52f28696391224.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4f4fe3c23776540625f3c2844152a7510fddf9f1">
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-b1621c740d652b703ce32d25a6d9655853660d04.jar" />
+    </item>
+    <item
+        jar="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.3.0/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="f2f7ec211ce4d244ee97a57523eeb4526dc3cf8a">
-        <dex dex="/Users/weiweili/Documents/android mobile/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-d3294a6f8945af52fbb56e89ad2d713e16608c2e.jar" />
+        <dex dex="/Users/mengyegong/Documents/project/Android/Android-Fitness/app/build/intermediates/pre-dexed/debug/classes-f3eccebeae8b67a04cddd3877f679029f224b9b2.jar" />
     </item>
 
 </items>

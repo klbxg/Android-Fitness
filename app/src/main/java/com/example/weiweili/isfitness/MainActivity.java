@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -41,7 +42,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private static final String SERVER_ADDRESS = "http://isfitness.site50.net/";
 
     Button bLogout, bSearchUser, bShareContent, bMyPage, bGroupSharing, bSport, bMySport;
-    EditText etName, etEmail, etUsername;
+    TextView etName, etEmail, etUsername;
     ImageView ivPhoto;
 
 
@@ -53,9 +54,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etName = (EditText) findViewById(R.id.etName);
-        etEmail = (EditText) findViewById(R.id.etEmail);
-        etUsername = (EditText) findViewById(R.id.etUsername);
+        etName = (TextView) findViewById(R.id.etName);
+        etEmail = (TextView) findViewById(R.id.etEmail);
+        etUsername = (TextView) findViewById(R.id.etUsername);
 
 
         bLogout = (Button) findViewById(R.id.bLogout);
