@@ -76,7 +76,8 @@
 
         <activity
             android:name=".Sport"
-            android:label="@string/title_activity_sport" >
+            android:label="@string/title_activity_sport"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name=".SharingActivity"
