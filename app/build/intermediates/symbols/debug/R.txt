@@ -756,6 +756,7 @@ int menu menu_share_content 0x7f0f0008
 int menu menu_sharing 0x7f0f0009
 int menu menu_sport 0x7f0f000a
 int mipmap ic_launcher 0x7f030000
+int mipmap logo 0x7f030001
 int raw gtm_analytics 0x7f070000
 int string abc_action_bar_home_description 0x7f080000
 int string abc_action_bar_home_description_format 0x7f08002d

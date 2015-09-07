@@ -56,7 +56,19 @@ public class Register extends ActionBarActivity implements View.OnClickListener{
                     pass.show();
                 }
                 else {
-                    if(checkUser(username)) {
+                    if (name.length() == 0) {
+                        Toast.makeText(Register.this, "name cannot be empty!", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (username.length() == 0) {
+                        Toast.makeText(Register.this, "username cannot be empty!", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (password1.length() == 0) {
+                        Toast.makeText(Register.this, "password cannot be empty!", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (email.indexOf('@') == -1) {
+                        Toast.makeText(Register.this, "Email format wrong!", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(checkUser(username)) {
                         Toast existed = Toast.makeText(Register.this, "Username existed!", Toast.LENGTH_SHORT);
                         existed.show();
                     }

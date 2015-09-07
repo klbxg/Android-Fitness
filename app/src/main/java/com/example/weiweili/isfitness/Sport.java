@@ -226,6 +226,21 @@ public class Sport extends FragmentActivity
                     lastTime = (h * 3600 + m * 60 + s) * 1000;
                     timerHandler.removeCallbacks(timerRunnable);
                     bStartSport.setText("Start");
+
+                    // Adjust the map to show all the lines
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    if (allLatLng.size() != 0) {
+                        for (LatLng location : allLatLng) {
+                            builder.include(location);
+                        }
+                        LatLngBounds bounds = builder.build();
+                        int padding = 20; // offset from edges of the map in pixels
+                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
+                                padding);
+                        mMap.moveCamera(cu);
+                        mMap.animateCamera(cu);
+                    }
+
                     LocationServices.FusedLocationApi.removeLocationUpdates(mLocationClient, mListener);
                     bResume.setVisibility(View.VISIBLE);
                     bStop.setVisibility(View.VISIBLE);
@@ -233,6 +248,7 @@ public class Sport extends FragmentActivity
                 }
                 else {
                     Toast.makeText(this, "startsport", Toast.LENGTH_SHORT).show();
+                    //mMap.setMyLocationEnabled(true);
                     mMap.clear();
 
                     bResume.setVisibility(View.INVISIBLE);
@@ -278,6 +294,7 @@ public class Sport extends FragmentActivity
                 break;
 
             case R.id.bStop:
+                //mMap.setMyLocationEnabled(false);
                 TextView distance = (TextView) findViewById(R.id.tDistanceResult);
                 TextView speed = (TextView) findViewById(R.id.tSpeedResult);
                 distance.setText("Distance: " + tDistance.getText().toString());
@@ -289,19 +306,19 @@ public class Sport extends FragmentActivity
                 bResume.setVisibility(View.INVISIBLE);
                 bStop.setVisibility(View.INVISIBLE);
                 bStartSport.setText("Start");
-                // Adjust the map to show all the lines
-                LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                if (allLatLng.size() != 0) {
-                    for (LatLng location : allLatLng) {
-                        builder.include(location);
-                    }
-                    LatLngBounds bounds = builder.build();
-                    int padding = 20; // offset from edges of the map in pixels
-                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
-                            padding);
-                    mMap.moveCamera(cu);
-                    mMap.animateCamera(cu);
-                }
+//                // Adjust the map to show all the lines
+//                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+//                if (allLatLng.size() != 0) {
+//                    for (LatLng location : allLatLng) {
+//                        builder.include(location);
+//                    }
+//                    LatLngBounds bounds = builder.build();
+//                    int padding = 20; // offset from edges of the map in pixels
+//                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,
+//                            padding);
+//                    mMap.moveCamera(cu);
+//                    mMap.animateCamera(cu);
+//                }
 
                 lastTime = 0;
                 distanceSum = 0;
@@ -331,6 +348,9 @@ public class Sport extends FragmentActivity
                                         "Save OK!", Toast.LENGTH_SHORT).show();
                                 showDialog(SHARE_DIALOG_ID);
                                 User user = userLocalStore.getLoggedInUser();
+                                if (thisSport == null) {
+                                    Log.d("thisSport", "null");
+                                }
                                 new UploadImage(thisSport, user.username).execute();
                                 return;
                             }
@@ -496,9 +516,11 @@ public class Sport extends FragmentActivity
 //                                    + "/MapScreenShot"
 //                                    + System.currentTimeMillis() + ".png");
                     thisSport = bmOverlay;
+
                     //bmOverlay.compress(Bitmap.CompressFormat.PNG, 90, out);
                 } catch (Exception e) {
                     e.printStackTrace();
+
                 }
             }
         };
