@@ -505,11 +505,12 @@ int drawable ic_plusone_small_off_client 0x7f02005c
 int drawable ic_plusone_standard_off_client 0x7f02005d
 int drawable ic_plusone_tall_off_client 0x7f02005e
 int drawable image_btn_press 0x7f02005f
-int drawable mypage_head 0x7f020060
-int drawable powered_by_google_dark 0x7f020061
-int drawable powered_by_google_light 0x7f020062
-int drawable search 0x7f020063
-int drawable xlistview_arrow 0x7f020064
+int drawable logo 0x7f020060
+int drawable mypage_head 0x7f020061
+int drawable powered_by_google_dark 0x7f020062
+int drawable powered_by_google_light 0x7f020063
+int drawable search 0x7f020064
+int drawable xlistview_arrow 0x7f020065
 int id action_bar 0x7f0e0055
 int id action_bar_activity_content 0x7f0e0000
 int id action_bar_container 0x7f0e0054
@@ -756,7 +757,8 @@ int menu menu_share_content 0x7f0f0008
 int menu menu_sharing 0x7f0f0009
 int menu menu_sport 0x7f0f000a
 int mipmap ic_launcher 0x7f030000
-int mipmap logo 0x7f030001
+int mipmap ic_launcher2 0x7f030001
+int mipmap logo 0x7f030002
 int raw gtm_analytics 0x7f070000
 int string abc_action_bar_home_description 0x7f080000
 int string abc_action_bar_home_description_format 0x7f08002d

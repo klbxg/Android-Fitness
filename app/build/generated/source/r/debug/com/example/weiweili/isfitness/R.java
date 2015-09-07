@@ -1914,11 +1914,12 @@ containing a value of this type.
         public static final int ic_plusone_standard_off_client=0x7f02005d;
         public static final int ic_plusone_tall_off_client=0x7f02005e;
         public static final int image_btn_press=0x7f02005f;
-        public static final int mypage_head=0x7f020060;
-        public static final int powered_by_google_dark=0x7f020061;
-        public static final int powered_by_google_light=0x7f020062;
-        public static final int search=0x7f020063;
-        public static final int xlistview_arrow=0x7f020064;
+        public static final int logo=0x7f020060;
+        public static final int mypage_head=0x7f020061;
+        public static final int powered_by_google_dark=0x7f020062;
+        public static final int powered_by_google_light=0x7f020063;
+        public static final int search=0x7f020064;
+        public static final int xlistview_arrow=0x7f020065;
     }
     public static final class id {
         public static final int action_bar=0x7f0e0055;
@@ -2175,7 +2176,8 @@ containing a value of this type.
     }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;
-        public static final int logo=0x7f030001;
+        public static final int ic_launcher2=0x7f030001;
+        public static final int logo=0x7f030002;
     }
     public static final class raw {
         public static final int gtm_analytics=0x7f070000;
