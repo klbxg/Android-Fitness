@@ -82,6 +82,10 @@
             android:name=".SharingActivity"
             android:label="@string/title_activity_sharing" >
         </activity>
+        <activity
+            android:name=".MyActivities"
+            android:label="@string/title_activity_my_activities" >
+        </activity>
     </application>
 
 </manifest>

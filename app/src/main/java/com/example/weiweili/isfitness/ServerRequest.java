@@ -71,6 +71,17 @@ public class ServerRequest {
         }
         return jObject;
     }
+    public JSONObject fetchUserActivityInBackground(String username, int offset) {
+        progressDialog.show();
+        JSONObject jObject;
+        try {
+            jObject = new FetchUserActivityAsyncTask(username, offset).execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return jObject;
+    }
     public JSONObject fetchFriendsInBackground(String username) {
         progressDialog.show();
         JSONObject jObject;
@@ -462,6 +473,47 @@ public class ServerRequest {
             HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
             HttpClient client = new DefaultHttpClient(httpRequestParams);
             HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchContents.php");
+            JSONObject jObject = new JSONObject();
+
+            try{
+                post.setEntity(new UrlEncodedFormEntity(dataToSend));
+                HttpResponse httpResponse = client.execute(post);
+                HttpEntity entity = httpResponse.getEntity();
+                String result = EntityUtils.toString(entity);
+                jObject = new JSONObject(result);
+                //Log.d("search", jObject.getJSONArray("username").getString(0));
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+            progressDialog.dismiss();
+        }
+    }
+
+    public class FetchUserActivityAsyncTask extends AsyncTask<Void, Void, JSONObject> {
+        String username;
+        String offset;
+        FetchUserActivityAsyncTask(String username, int offset) {
+            this.username = username;
+            this.offset = offset + "";
+        }
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            ArrayList<NameValuePair> dataToSend = new ArrayList<>();
+            dataToSend.add(new BasicNameValuePair("username", username));
+            dataToSend.add(new BasicNameValuePair("offset", offset));
+
+            HttpParams httpRequestParams = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpConnectionParams.setSoTimeout(httpRequestParams, CONNECTION_TIME);
+            HttpClient client = new DefaultHttpClient(httpRequestParams);
+            HttpPost post = new HttpPost(SERVER_ADDRESS + "FetchActivities.php");
             JSONObject jObject = new JSONObject();
 
             try{

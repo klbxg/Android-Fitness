@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.weiweili.isfitness.MyActivities">
+
+    <com.example.weiweili.isfitness.XListView
+        android:id="@+id/lvSearchMyActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/ivMyPageHead"
+        android:dividerHeight="5dp"
+        android:divider="#E6E6E6"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="140dp"
+        android:id="@+id/ivMyPageHead"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/mypage_head"
+        android:scaleType="fitXY"/>
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/ivMyPhoto"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/default_userimage"
+        android:layout_above="@+id/lvSearchMyActivity"
+        android:layout_alignEnd="@+id/ivMyPageHead"
+        />
+
+</RelativeLayout>

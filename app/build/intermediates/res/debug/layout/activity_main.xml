@@ -130,6 +130,13 @@
             android:id="@+id/bSport"
             android:layout_gravity="center_horizontal"
             android:layout_below="@+id/bGroupSharing" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MySport"
+            android:id="@+id/bMySport"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/bSport" />
 
 
     </RelativeLayout>

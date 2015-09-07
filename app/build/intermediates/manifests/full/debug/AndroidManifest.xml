@@ -88,6 +88,10 @@
             android:name="com.example.weiweili.isfitness.SharingActivity"
             android:label="@string/title_activity_sharing" >
         </activity>
+        <activity
+            android:name="com.example.weiweili.isfitness.MyActivities"
+            android:label="@string/title_activity_my_activities" >
+        </activity>
     </application>
 
 </manifest>
